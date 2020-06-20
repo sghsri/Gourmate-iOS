@@ -34,7 +34,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="New User"/>
                                 <connections>
-                                    <segue destination="Nxm-lv-0gy" kind="show" id="rRB-Ph-3tD"/>
+                                    <segue destination="tun-vQ-tCr" kind="show" id="Vdw-mO-WIz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJT-Wx-6cc">
@@ -42,7 +42,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Returning User"/>
                                 <connections>
-                                    <segue destination="g9m-jC-iFb" kind="show" id="96i-xc-CE5"/>
+                                    <segue destination="gol-1g-nbF" kind="show" id="S0J-y9-kQL"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="f0R-U6-UFK">
@@ -63,40 +63,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1036.231884057971" y="611.38392857142856"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Yyz-5I-gjt">
-            <objects>
-                <viewController modalPresentationStyle="fullScreen" id="g9m-jC-iFb" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7au-Sh-Ilg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login Screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qel-KY-7Sq">
-                                <rect key="frame" x="118" y="181" width="179" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WRz-W2-xTh">
-                                <rect key="frame" x="162" y="488" width="91" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <segue destination="gol-1g-nbF" kind="show" id="IeO-JR-4v3"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="8gN-GL-HDQ"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Bmi-nh-DWF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tpu-Bd-cdJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="168.11594202898553" y="118.52678571428571"/>
+            <point key="canvasLocation" x="265" y="603"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="FpA-NZ-gRa">
@@ -125,7 +92,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gs-Ce-TVA">
                                 <rect key="frame" x="126" y="804" width="162" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Suggestions"/>
+                                <state key="normal" title="Make Group"/>
                                 <connections>
                                     <segue destination="fax-Ld-5aE" kind="show" id="IID-rO-sdf"/>
                                 </connections>
@@ -190,6 +157,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t28-0A-4iJ">
+                                <rect key="frame" x="156" y="724" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Group Analysis"/>
+                                <connections>
+                                    <segue destination="ylQ-zv-k07" kind="show" id="5W0-GE-40l"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="fUJ-b6-e5T"/>
@@ -223,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O1F-NI-NUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2982.608695652174" y="468.75"/>
+            <point key="canvasLocation" x="3112" y="863"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="3gm-l8-9ee">
@@ -253,40 +228,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozv-f4-PkM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2982.608695652174" y="-324.10714285714283"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="pXv-Mj-jLA">
-            <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Nxm-lv-0gy" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="83x-dm-bgL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ks5-Vr-VXO">
-                                <rect key="frame" x="137" y="250" width="140" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hl7-cl-9U3">
-                                <rect key="frame" x="145" y="541" width="124" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Sign up"/>
-                                <connections>
-                                    <segue destination="tun-vQ-tCr" kind="show" id="PnC-0g-Wnm"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="KbH-wx-xCD"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="fuf-kb-Z19"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5PN-is-AVm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="166.66666666666669" y="1080.8035714285713"/>
+            <point key="canvasLocation" x="3112" y="-563"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="D9M-gV-Ie8">
@@ -328,12 +270,37 @@
             </objects>
             <point key="canvasLocation" x="1258" y="1081"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="bei-kp-vQN">
+            <objects>
+                <viewController id="ylQ-zv-k07" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2zu-cu-eEL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group Analysis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZp-Gd-8Ju">
+                                <rect key="frame" x="150" y="177" width="115" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="h0I-sk-wB7"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="D3R-Bt-BEF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ioh-kV-6lu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3111.594202898551" y="137.94642857142856"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Logo" width="200" height="200"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IeO-JR-4v3"/>
+        <segue reference="S0J-y9-kQL"/>
     </inferredMetricsTieBreakers>
 </document>
