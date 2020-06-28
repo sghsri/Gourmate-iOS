@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F701C1C24A8F4DB008A7BF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F701C1B24A8F4DB008A7BF8 /* GoogleService-Info.plist */; };
 		1F9153BA24956FB600C45437 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153B924956FB600C45437 /* AppDelegate.swift */; };
 		1F9153BC24956FB600C45437 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153BB24956FB600C45437 /* SceneDelegate.swift */; };
 		1F9153BE24956FB600C45437 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153BD24956FB600C45437 /* SignInViewController.swift */; };
@@ -17,9 +18,12 @@
 		34229365249BC5B00054368B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34229364249BC5B00054368B /* SettingsViewController.swift */; };
 		342293BF24A566B50054368B /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342293BE24A566B50054368B /* NewUserViewController.swift */; };
 		342293C124A5686C0054368B /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342293C024A5686C0054368B /* UILabelPadding.swift */; };
+		4A3AFE05F7ED4095B9F094B4 /* Pods_Gourmate_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gourmate_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F701C1B24A8F4DB008A7BF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9153B624956FB600C45437 /* Gourmate-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gourmate-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9153B924956FB600C45437 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F9153BB24956FB600C45437 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +36,8 @@
 		34229364249BC5B00054368B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		342293BE24A566B50054368B /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		342293C024A5686C0054368B /* UILabelPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
+		50AD52FE2C5175E85B34AE72 /* Pods-Gourmate-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		5C7DEF5834B7799A7C294666 /* Pods-Gourmate-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3AFE05F7ED4095B9F094B4 /* Pods_Gourmate_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +57,8 @@
 			children = (
 				1F9153B824956FB600C45437 /* Gourmate-iOS */,
 				1F9153B724956FB600C45437 /* Products */,
+				C685521C31225AFD2C1D9760 /* Pods */,
+				7FD0AAF20E7B3B6A1D84295C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				1F9153B924956FB600C45437 /* AppDelegate.swift */,
+				1F701C1B24A8F4DB008A7BF8 /* GoogleService-Info.plist */,
 				1F9153BB24956FB600C45437 /* SceneDelegate.swift */,
 				1F9153BD24956FB600C45437 /* SignInViewController.swift */,
 				1F9153BF24956FB600C45437 /* Main.storyboard */,
@@ -79,6 +89,24 @@
 			path = "Gourmate-iOS";
 			sourceTree = "<group>";
 		};
+		7FD0AAF20E7B3B6A1D84295C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C685521C31225AFD2C1D9760 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C7DEF5834B7799A7C294666 /* Pods-Gourmate-iOS.debug.xcconfig */,
+				50AD52FE2C5175E85B34AE72 /* Pods-Gourmate-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +114,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F9153CD24956FB800C45437 /* Build configuration list for PBXNativeTarget "Gourmate-iOS" */;
 			buildPhases = (
+				4E7949C9AC80E332CB9188BC /* [CP] Check Pods Manifest.lock */,
 				1F9153B224956FB600C45437 /* Sources */,
 				1F9153B324956FB600C45437 /* Frameworks */,
 				1F9153B424956FB600C45437 /* Resources */,
+				C0E5EC5205639013D9074BB5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,12 +168,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9153C924956FB700C45437 /* LaunchScreen.storyboard in Resources */,
+				1F701C1C24A8F4DB008A7BF8 /* GoogleService-Info.plist in Resources */,
 				1F9153C624956FB700C45437 /* Assets.xcassets in Resources */,
 				1F9153C124956FB600C45437 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4E7949C9AC80E332CB9188BC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Gourmate-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0E5EC5205639013D9074BB5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1F9153B224956FB600C45437 /* Sources */ = {
@@ -298,6 +371,7 @@
 		};
 		1F9153CE24956FB800C45437 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C7DEF5834B7799A7C294666 /* Pods-Gourmate-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -316,6 +390,7 @@
 		};
 		1F9153CF24956FB800C45437 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50AD52FE2C5175E85B34AE72 /* Pods-Gourmate-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
