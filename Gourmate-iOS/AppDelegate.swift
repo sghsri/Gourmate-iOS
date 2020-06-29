@@ -8,15 +8,29 @@
 
 import UIKit
 import CoreData
+import Firebase
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate  {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+      // Initialize sign-in
+      FirebaseApp.configure()
+      GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+
+      return true
+    }
+    
+    @available(iOS 9.0, *)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = GIDSignIn.sharedInstance().handle(url)
+        return handled
+        // return GIDSignIn.sharedInstance().handle(url,
+        // sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+        // annotation: [:])
     }
 
     // MARK: UISceneSession Lifecycle

@@ -5,6 +5,7 @@ target 'Gourmate-iOS' do
   use_frameworks!
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'GoogleSignIn', '~> 5.0'
   # Pods for Gourmate-iOS
   # add pods for desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods
