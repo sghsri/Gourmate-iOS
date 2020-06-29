@@ -8,12 +8,26 @@
 
 import UIKit
 
-class NewUserViewController: UIViewController {
+class CuisincePrefCell : UITableViewCell {
+    
+    @IBOutlet weak var checkbox: CheckBox!
+    @IBOutlet weak var cuisineLabel: UILabel!
+    
+}
+
+class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var welcomeText: UILabelPadding!
     @IBOutlet weak var cuisineText: UILabelPadding!
+    @IBOutlet weak var cuisineTable: UITableView!
+    
+    var cuisines = ["American", "Chinese", "Mexican", "Thai", "Japanese", "Indian"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cuisineTable.delegate = self
+        cuisineTable.dataSource = self
         
         // Do any additional setup after loading the view.
     }
@@ -31,7 +45,24 @@ class NewUserViewController: UIViewController {
 //        cuisineText.layer.cornerRadius = 8
 //        cuisineText.sizeToFit()
     }
-
+    
+    
+    // Number of rows in Cuisine table
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        cuisines.count
+    }
+    
+    // Data in Cuisine Cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = cuisineTable.dequeueReusableCell(withIdentifier: "cuisineTableCell", for: indexPath) as! CuisincePrefCell
+        
+        let cuisineText = cuisines[indexPath.row]
+        cell.cuisineLabel.text = cuisineText
+        
+        return cell
+        
+    }
+    
     /*
     // MARK: - Navigation
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F701C1E24A8F9DA008A7BF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F701C1D24A8F9DA008A7BF8 /* GoogleService-Info.plist */; };
 		1F9153BA24956FB600C45437 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153B924956FB600C45437 /* AppDelegate.swift */; };
 		1F9153BC24956FB600C45437 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153BB24956FB600C45437 /* SceneDelegate.swift */; };
 		1F9153BE24956FB600C45437 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153BD24956FB600C45437 /* SignInViewController.swift */; };
@@ -18,12 +17,13 @@
 		34229365249BC5B00054368B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34229364249BC5B00054368B /* SettingsViewController.swift */; };
 		342293BF24A566B50054368B /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342293BE24A566B50054368B /* NewUserViewController.swift */; };
 		342293C124A5686C0054368B /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342293C024A5686C0054368B /* UILabelPadding.swift */; };
+		34F909C724AA49ED0025FC6D /* GoogleService-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34F909C624AA49ED0025FC6D /* GoogleService-info.plist */; };
+		34F909C924AA4B730025FC6D /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F909C824AA4B730025FC6D /* Checkbox.swift */; };
 		4A3AFE05F7ED4095B9F094B4 /* Pods_Gourmate_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gourmate_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F701C1D24A8F9DA008A7BF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9153B624956FB600C45437 /* Gourmate-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gourmate-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9153B924956FB600C45437 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F9153BB24956FB600C45437 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +36,8 @@
 		34229364249BC5B00054368B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		342293BE24A566B50054368B /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		342293C024A5686C0054368B /* UILabelPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
+		34F909C624AA49ED0025FC6D /* GoogleService-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-info.plist"; sourceTree = "<group>"; };
+		34F909C824AA4B730025FC6D /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		50AD52FE2C5175E85B34AE72 /* Pods-Gourmate-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		5C7DEF5834B7799A7C294666 /* Pods-Gourmate-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,7 +75,6 @@
 		1F9153B824956FB600C45437 /* Gourmate-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				1F701C1D24A8F9DA008A7BF8 /* GoogleService-Info.plist */,
 				1F9153B924956FB600C45437 /* AppDelegate.swift */,
 				1F9153BB24956FB600C45437 /* SceneDelegate.swift */,
 				1F9153BD24956FB600C45437 /* SignInViewController.swift */,
@@ -82,9 +83,11 @@
 				1F9153C524956FB700C45437 /* Assets.xcassets */,
 				1F9153C724956FB700C45437 /* LaunchScreen.storyboard */,
 				1F9153CA24956FB800C45437 /* Info.plist */,
+				34F909C624AA49ED0025FC6D /* GoogleService-info.plist */,
 				1F9153C224956FB600C45437 /* Gourmate_iOS.xcdatamodeld */,
 				342293BE24A566B50054368B /* NewUserViewController.swift */,
 				342293C024A5686C0054368B /* UILabelPadding.swift */,
+				34F909C824AA4B730025FC6D /* Checkbox.swift */,
 			);
 			path = "Gourmate-iOS";
 			sourceTree = "<group>";
@@ -167,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9153C924956FB700C45437 /* LaunchScreen.storyboard in Resources */,
-				1F701C1E24A8F9DA008A7BF8 /* GoogleService-Info.plist in Resources */,
+				34F909C724AA49ED0025FC6D /* GoogleService-info.plist in Resources */,
 				1F9153C624956FB700C45437 /* Assets.xcassets in Resources */,
 				1F9153C124956FB600C45437 /* Main.storyboard in Resources */,
 			);
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34F909C924AA4B730025FC6D /* Checkbox.swift in Sources */,
 				1F9153BE24956FB600C45437 /* SignInViewController.swift in Sources */,
 				342293C124A5686C0054368B /* UILabelPadding.swift in Sources */,
 				1F9153BA24956FB600C45437 /* AppDelegate.swift in Sources */,
