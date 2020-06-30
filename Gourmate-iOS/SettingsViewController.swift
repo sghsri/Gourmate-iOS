@@ -37,15 +37,44 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingsTable.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableCell
         
+        // Label as "Notifications" or "Dark mode"
         cell.settingText.text = settings[indexPath.row]
-//        cell.settingsSwitch.isOn
+        
+        // Put identifier on switch
+        cell.settingsSwitch.restorationIdentifier = "\(settings[indexPath.row]) Identifier"
         return cell
     }
     
     // Change Core Data for setting that switch is associated with
     @IBAction func changeSwitch(_ sender: Any) {
         let selectedSwitch = sender as! UISwitch
-        print(selectedSwitch.isOn)
+        
+        // Notifications swtich
+        if selectedSwitch.restorationIdentifier == "Notifications Identifier" {
+            if selectedSwitch.isOn {
+                print("Turned notifications on")
+            } else {
+                print("Turned notifications off")
+            }
+        
+        // Dark mode switch
+        } else if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
+            if selectedSwitch.isOn {
+                print("Turned dark mode on")
+
+                UIApplication.shared.windows.forEach { window in
+                    window.overrideUserInterfaceStyle = .dark
+                }
+
+            } else {
+                print("Turned dark mode off")
+
+                UIApplication.shared.windows.forEach { window in
+                    window.overrideUserInterfaceStyle = .light
+                }
+
+            }
+        }
     }
 
 }
