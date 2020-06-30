@@ -46,6 +46,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                     userDP = user.profile.imageURL(withDimension: 200)
                 }
                 print("\(fullName) \(email) \(userDP)")
+                
+                self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                 // now we have the user objects here
             }
         }
