@@ -337,6 +337,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
+                                    <action selector="doneButton:" destination="tun-vQ-tCr" eventType="touchUpInside" id="mQu-ws-2Ml"/>
                                     <segue destination="4qd-6C-A2X" kind="show" id="OpZ-Oc-1GV"/>
                                 </connections>
                             </button>
@@ -355,6 +356,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQj-jO-Q0A" customClass="CheckBox" customModule="Gourmate_iOS" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="16" width="45" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="cuisineCheckbox:" destination="tun-vQ-tCr" eventType="touchUpInside" id="TTa-1l-FgU"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cuisine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vB4-eq-0A4">
                                                     <rect key="frame" x="68" y="21" width="270" height="21"/>
@@ -394,6 +398,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDE-bQ-LBm" customClass="CheckBox" customModule="Gourmate_iOS" customModuleProvider="target">
                                                     <rect key="frame" x="22" y="16" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="drCheckbox:" destination="tun-vQ-tCr" eventType="touchUpInside" id="26T-3l-QZe"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>

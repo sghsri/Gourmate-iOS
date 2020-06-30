@@ -2,17 +2,19 @@
 //  NewUserViewController.swift
 //  Gourmate-iOS
 //
-//  Created by Matthew Onghai on 6/25/20.
+//  Created by Jennifer Suriadinata on 6/25/20.
 //  Copyright © 2020 utexas. All rights reserved.
 //
 
 import UIKit
 
+// Cell in Cuisine Preferences table
 class CuisincePrefCell : UITableViewCell {
     @IBOutlet weak var checkbox: CheckBox!
     @IBOutlet weak var cuisineLabel: UILabel!
 }
 
+// Cell in Dietary Restriction table
 class DietaryRestrictionCell : UITableViewCell {
     @IBOutlet weak var checkbox: CheckBox!
     @IBOutlet weak var DRLabel: UILabel!
@@ -25,9 +27,11 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var cuisineTable: UITableView!
     @IBOutlet weak var DRTable: UITableView!
     
-    var cuisines = ["American", "Chinese", "Mexican", "Thai", "Japanese", "Indian"]
+    var cuisines = ["American", "Chinese", "Mexican", "Thai", "Japanese", "Indian"] // Types of cuisine
+    var dietaryRestrictions = ["Vegetarian", "Vegan"] // Types of dietary restrictions
     
-    var dietaryRestrictions = ["Vegetarian", "Vegan"]
+    var userCuisines:[String] = []
+    var userDietaryRestrictions:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,21 +43,16 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         DRTable.delegate = self
         DRTable.dataSource = self
         
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        // Add borders
+        // Add borders to welcome text
         welcomeText.layer.borderColor = UIColor.darkGray.cgColor
         welcomeText.layer.borderWidth = 1.0
         welcomeText.layer.cornerRadius = 8
         welcomeText.sizeToFit()
         
-//        cuisineText.layer.borderColor = UIColor.darkGray.cgColor
-//        cuisineText.layer.borderWidth = 1.0
-//        cuisineText.layer.cornerRadius = 8
-//        cuisineText.sizeToFit()
     }
     
     
@@ -64,7 +63,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else if tableView == DRTable{
             return dietaryRestrictions.count
         }
-        print("No table association")
+        print("ERROR: No table association")
         return 0
     }
     
@@ -79,6 +78,10 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cuisineText = cuisines[indexPath.row]
             cell.cuisineLabel.text = cuisineText
             
+            // Set identifier for checkbox
+            cell.checkbox.isChecked = false // mark all as unchecked
+            cell.checkbox.restorationIdentifier = "\(cuisines[indexPath.row])"
+            
             return cell
         } else if tableView == DRTable {
             let cell = DRTable.dequeueReusableCell(withIdentifier: "DRTableCell", for: indexPath) as! DietaryRestrictionCell
@@ -87,20 +90,41 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             let DRText = dietaryRestrictions[indexPath.row]
             cell.DRLabel.text = DRText
             
+            // Set identifier for checkbox
+            cell.checkbox.isChecked = false // mark all as unchecked
+            cell.checkbox.restorationIdentifier = "\(dietaryRestrictions[indexPath.row])"
+            
             return cell
         }
         print ("No table association")
         return UITableViewCell()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func checkboxAddToArray( array: inout [String], checkbox: CheckBox){
+        
+        // Has just been unchecked
+        if checkbox.isChecked {
+            
+            array.removeAll{$0 == checkbox.restorationIdentifier}
+           
+        // Has just been checked
+        } else {
+            array.append(checkbox.restorationIdentifier!)
+        }
     }
-    */
-
+    
+    @IBAction func cuisineCheckbox(_ sender: Any) {
+        checkboxAddToArray(array: &userCuisines, checkbox: sender as! CheckBox)
+    }
+    
+    @IBAction func drCheckbox(_ sender: Any) {
+        checkboxAddToArray(array: &userDietaryRestrictions, checkbox: sender as! CheckBox)
+        
+    }
+    
+    @IBAction func doneButton(_ sender: Any) {
+        print(userCuisines)
+        print(userDietaryRestrictions)
+    }
+    
 }
