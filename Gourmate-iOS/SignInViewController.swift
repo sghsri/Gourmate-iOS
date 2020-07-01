@@ -11,7 +11,7 @@ import FirebaseAuth
 import GoogleSignIn
 import CoreData
 
-var curUser:String = ""
+var curUser:NSManagedObject = NSManagedObject()
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
 
@@ -50,8 +50,6 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                 }
                 print("\(fullName) \(email) \(userDP)")
                 
-                // Save current user (global)
-                curUser = email!
                 
                 // Store email in Core Data
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -69,8 +67,9 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
 
                         // Already have this user - fetch current data
                         if let curEmail = user.value(forKey:"email"), (email == curEmail as? String){
-                            curUser = curEmail as! String
+                            curUser = user // Save current user globally
                             found = true
+                            self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
                         }
                     }
                     
@@ -80,20 +79,21 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                 }
 
                 // User wasn't found in Core Data - add user to Core Data
-                if(!found) {
+                if !found {
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(email, forKey: "email")
                     
                     do {
-                       try context.save()
-                      } catch {
-                       print("Failed saving")
+                        try context.save()
+                        } catch {
+                        print("Failed saving")
                     }
+                    
+                    curUser = newUser // Save current user globally
+
+                    self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                 }
-                
-                self.performSegue(withIdentifier: "newUserSegue", sender: nil)
-                // now we have the user objects here
             }
         }
     }

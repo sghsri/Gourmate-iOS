@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <userGuides>
-                            <userLayoutGuide location="448" affinity="minY"/>
+                            <userLayoutGuide location="446" affinity="minY"/>
                             <userLayoutGuide location="448" affinity="minY"/>
                         </userGuides>
                         <subviews>
@@ -56,6 +56,7 @@
                     <connections>
                         <outlet property="googleSignInButton" destination="o9F-Ij-k7h" id="Fie-IB-yB2"/>
                         <segue destination="tun-vQ-tCr" kind="show" identifier="newUserSegue" id="dEh-GU-CFB"/>
+                        <segue destination="4qd-6C-A2X" kind="show" identifier="existingUserSegue" id="2KO-NF-EdM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -503,6 +504,7 @@
         <image name="person.fill" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eSi-7o-mIe"/>
+        <segue reference="2KO-NF-EdM"/>
+        <segue reference="5W0-GE-40l"/>
     </inferredMetricsTieBreakers>
 </document>
