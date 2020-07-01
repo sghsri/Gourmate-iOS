@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 // Cell in Cuisine Preferences table
 class CuisincePrefCell : UITableViewCell {
@@ -42,6 +43,22 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         DRTable.delegate = self
         DRTable.dataSource = self
+        
+        print("Current User:", curUser)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+               print(data.value(forKey: "email") as! String)
+          }
+            
+        } catch {
+            
+            print("Failed")
+        }
         
     }
     

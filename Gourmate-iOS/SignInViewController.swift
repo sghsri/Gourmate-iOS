@@ -9,6 +9,9 @@
 import UIKit
 import FirebaseAuth
 import GoogleSignIn
+import CoreData
+
+var curUser:String = ""
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
 
@@ -46,6 +49,48 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                     userDP = user.profile.imageURL(withDimension: 200)
                 }
                 print("\(fullName) \(email) \(userDP)")
+                
+                // Save current user (global)
+                curUser = email!
+                
+                // Store email in Core Data
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let context = appDelegate.persistentContainer.viewContext
+                
+                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+                request.returnsObjectsAsFaults = false
+                var found = false
+                
+                do {
+                    let result = try context.fetch(request)
+                    
+                    // Search through current users
+                    for user in result as! [NSManagedObject] {
+
+                        // Already have this user - fetch current data
+                        if let curEmail = user.value(forKey:"email"), (email == curEmail as? String){
+                            curUser = curEmail as! String
+                            found = true
+                        }
+                    }
+                    
+                } catch {
+                    
+                    print("Failed")
+                }
+
+                // User wasn't found in Core Data - add user to Core Data
+                if(!found) {
+                    let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                    let newUser = NSManagedObject(entity: entity!, insertInto: context)
+                    newUser.setValue(email, forKey: "email")
+                    
+                    do {
+                       try context.save()
+                      } catch {
+                       print("Failed saving")
+                    }
+                }
                 
                 self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                 // now we have the user objects here
