@@ -45,20 +45,6 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         DRTable.dataSource = self
         
         print("Current User:", curUser)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-               print(data.value(forKey: "email") as! String)
-          }
-            
-        } catch {
-            
-            print("Failed")
-        }
         
     }
     
@@ -142,6 +128,61 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func doneButton(_ sender: Any) {
         print(userCuisines)
         print(userDietaryRestrictions)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        // Add all cuisine preferences to core data
+        for cuisinePref in userCuisines {
+            let entity = NSEntityDescription.entity(forEntityName: "CuisinePref", in: context)
+            let addCP = NSManagedObject(entity: entity!, insertInto: context)
+            
+            // Create cuisine preference
+            addCP.setValue(cuisinePref, forKey: "prefName")
+            
+            // Add cuisine preference to users
+            addCP.setValue(curUser, forKey: "user")
+            
+            do {
+               try context.save()
+              } catch {
+               print("Failed saving")
+            }
+        }
+        
+        // Add all dietary restrictions to core data
+        for dietaryRestr in dietaryRestrictions {
+            let entity = NSEntityDescription.entity(forEntityName: "DietaryRestr", in: context)
+            let addDR = NSManagedObject(entity: entity!, insertInto: context)
+            
+            // Create Dietary Restriction
+            addDR.setValue(dietaryRestr, forKey: "restrName")
+            
+            // Add dietary restriction to user
+            addDR.setValue(curUser, forKey: "user")
+            
+            do {
+               try context.save()
+              } catch {
+               print("Failed saving")
+            }
+        }
+        
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "email") as! String)
+                print(data.value(forKey: "cuisinePreferences")!)
+                print(data.value(forKey: "dietaryRestrictions")!)
+          }
+            
+        } catch {
+            
+            print("Failed")
+        }
     }
     
 }
