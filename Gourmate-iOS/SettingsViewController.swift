@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 // Settings Table custom cell
 class SettingsTableCell: UITableViewCell {
@@ -26,6 +27,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         settingsTable.delegate = self
         settingsTable.dataSource = self
+               
     }
     
     // Number of rows
@@ -42,6 +44,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Put identifier on switch
         cell.settingsSwitch.restorationIdentifier = "\(settings[indexPath.row]) Identifier"
+        
+        // Set switch on/off
+        if settings[indexPath.row] == "Dark Mode" {
+            cell.settingsSwitch.isOn = curUser.value(forKey: "darkMode") as! Bool
+        }
+        else if settings[indexPath.row] == "Notifications" {
+            cell.settingsSwitch.isOn = curUser.value(forKey: "notifications") as! Bool
+        }
+        
+        
         return cell
     }
     
@@ -61,6 +73,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         } else if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
             if selectedSwitch.isOn {
                 print("Turned dark mode on")
+                curUser.setValue(true, forKey: "darkMode")
 
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .dark
@@ -68,6 +81,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
             } else {
                 print("Turned dark mode off")
+                curUser.setValue(false, forKey: "darkMode")
 
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .light
