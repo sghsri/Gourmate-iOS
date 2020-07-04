@@ -67,8 +67,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
 
                         // Already have this user - fetch current data
                         if let curEmail = user.value(forKey:"email"), (email == curEmail as? String){
-                            user.setValue(false, forKey: "notifications")
-                            user.setValue(true, forKey: "darkMode")
+                            user.setValue(curUserNotif, forKey: "notifications")
 
                             do {
                                 try context.save()
@@ -93,8 +92,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(email, forKey: "email")
-                    newUser.setValue(true, forKey: "notifications")
-                    newUser.setValue(false, forKey: "darkMode")
+                    newUser.setValue(curUserNotif, forKey: "notifications")
+                    newUser.setValue(true, forKey: "darkMode")
                     
                     do {
                         try context.save()
