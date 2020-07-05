@@ -543,13 +543,10 @@
             <point key="canvasLocation" x="2027.5362318840582" y="118.52678571428571"/>
         </scene>
     </scenes>
-<<<<<<< HEAD
     <inferredMetricsTieBreakers>
         <segue reference="OpZ-Oc-1GV"/>
         <segue reference="5W0-GE-40l"/>
     </inferredMetricsTieBreakers>
-=======
->>>>>>> d3c0d86cb3a763cc49636b9698d4166778c3c83f
     <resources>
         <image name="Logo" width="200" height="200"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
