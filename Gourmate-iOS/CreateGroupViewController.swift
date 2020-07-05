@@ -14,31 +14,37 @@ class MateCell : UITableViewCell {
     @IBOutlet weak var mateName: UILabel!
 }
 
-class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
+    var searchActive: Bool = false
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var matesLabel: UILabel!
     var mates:[MateObject] = []
+    var filtered:[MateObject] = []
+    var selected:[MateObject] = []
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         ref = Database.database().reference()
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
             if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
                 for child in snapshots {
-                    print(child.value)
-                    print(type(of: child.value))
-//                    self.mates.append(MateObject(mateObj: child.value as! NSDictionary))
+                    self.mates.append(MateObject(mateObj: child.value as! NSDictionary))
+                    self.filtered = self.mates
                 }
+                self.tableView.reloadData()
             }
         })
+        redrawCurrentGroup()
         // Do any additional setup after loading the view.
     }
     
+
     func textFieldShouldReturn(textField:UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -48,14 +54,71 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.endEditing(true)
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+         filtered = mates.filter({ (mate) -> Bool in
+            let tmp: String = mate.name
+             return tmp.hasPrefix(searchText)
+         })
+         if(filtered.count == 0){
+             searchActive = false;
+         } else {
+             searchActive = true;
+         }
+         self.tableView.reloadData()
+     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mates.count
+        if(searchActive) {
+            return filtered.count
+        }
+        return mates.count;
     }
+    
+    func redrawCurrentGroup(){
+        var currentGroup = "No Mates"
+        if selected.count > 0 {
+            currentGroup = selected.map({ (mate) -> String in
+                mate.name
+                }).joined(separator: ", ")
+        }
+        self.matesLabel.text = currentGroup
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let user = self.searchActive ? filtered[indexPath.row] : mates[indexPath.row]
+        if selected.contains(user) {
+            if let index = selected.firstIndex(of: user) {
+                selected.remove(at: index)
+            }
+        } else {
+            selected.append(user)
+        }
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        redrawCurrentGroup()
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
-        let mate = self.mates[indexPath.row]
+        let source = self.searchActive ? self.filtered : self.mates
+        let mate = source[indexPath.row]
         cell.mateName.text = mate.name
         let imageURL = URL(string: mate.image)
         DispatchQueue.global().async {
@@ -64,10 +127,6 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.mateImage.image = UIImage(data: data!)
             }
         }
-        // Set identifier for checkbox
-        //        cell.checkbox.isChecked = false // mark all as unchecked
-        //        cell.checkbox.restorationIdentifier = "\(cuisines[indexPath.row])"
-        
         return cell
     }
     

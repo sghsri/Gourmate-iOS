@@ -9,14 +9,15 @@
 import Foundation
 
 
-class MateObject {
+class MateObject: Equatable {
+
     var uID:String
     var email:String
     var name:String
     var givenName:String
     var image:String
-    var cuisines:[String]
-    var restrictions:[String]
+    var cuisines:[String] = []
+    var restrictions:[String] = []
     
     
     init(mateObj: NSDictionary) {
@@ -27,5 +28,10 @@ class MateObject {
         self.image = mateObj["image"] as! String
         self.cuisines = mateObj["cuisines"] as! [String]
         self.restrictions = mateObj["restrictions"] as! [String]
+    }
+    
+    
+    static func == (lhs: MateObject, rhs: MateObject) -> Bool {
+        return rhs.uID == lhs.uID
     }
 }
