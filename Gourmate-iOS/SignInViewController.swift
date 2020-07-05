@@ -8,103 +8,55 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 import GoogleSignIn
 import CoreData
 
 var curUser:NSManagedObject = NSManagedObject()
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
-
+    
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
+    var ref: DatabaseReference!
     override func viewDidLoad() {
         super.viewDidLoad()
         googleSignInButton.style = GIDSignInButtonStyle.wide
         // Change all screens to dark mode
         UIApplication.shared.windows.forEach { window in
-            window.overrideUserInterfaceStyle = .dark
+            window.overrideUserInterfaceStyle = .light
         }
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().delegate = self
+        ref = Database.database().reference()
+        
         // Do any additional setup after+++ loading the view.
     }
     
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            guard let auth = user.authentication else { return }
-            let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
-            Auth.auth().signIn(with: credentials) { (authResult, error) in
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        guard let auth = user.authentication else { return }
+        let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+        Auth.auth().signIn(with: credentials) { (authResult, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
                 print("Login Successful")
                 let user: GIDGoogleUser = GIDSignIn.sharedInstance()!.currentUser
-                let fullName = user.profile.name
                 let email = user.profile.email
-                var userDP = URL(string: "")
-                if user.profile.hasImage {
-                    userDP = user.profile.imageURL(withDimension: 200)
-                }
-                print("\(fullName) \(email) \(userDP)")
                 
-                
-                // Store email in Core Data
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                let context = appDelegate.persistentContainer.viewContext
-                
-                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-                request.returnsObjectsAsFaults = false
-                var found = false
-                
-                do {
-                    let result = try context.fetch(request)
-                    
-                    // Search through current users
-                    for user in result as! [NSManagedObject] {
-
-                        // Already have this user - fetch current data
-                        if let curEmail = user.value(forKey:"email"), (email == curEmail as? String){
-                            user.setValue(curUserNotif, forKey: "notifications")
-
-                            do {
-                                try context.save()
-                                } catch {
-                                print("Failed saving")
-                            }
-                            
-                            print("setting bool values")
-                            curUser = user // Save current user globally
-                            found = true
+                if let userID = user.userID  {
+                    self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if snapshot.hasChild("\(userID)"){
                             self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
+                        } else{
+                            self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                         }
                     }
-                    
-                } catch {
-                    
-                    print("Failed")
-                }
-
-                // User wasn't found in Core Data - add user to Core Data
-                if !found {
-                    let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
-                    let newUser = NSManagedObject(entity: entity!, insertInto: context)
-                    newUser.setValue(email, forKey: "email")
-                    newUser.setValue(curUserNotif, forKey: "notifications")
-                    newUser.setValue(true, forKey: "darkMode")
-                    
-                    do {
-                        try context.save()
-                        } catch {
-                        print("Failed saving")
-                    }
-                    
-                    curUser = newUser // Save current user globally
-
-                    self.performSegue(withIdentifier: "newUserSegue", sender: nil)
-                }
+                )}
             }
         }
     }

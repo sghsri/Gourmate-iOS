@@ -66,7 +66,7 @@
         <!--Create Group-->
         <scene sceneID="FpA-NZ-gRa">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="gol-1g-nbF" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="gol-1g-nbF" customClass="CreateGroupViewController" customModule="Gourmate_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oBv-D7-7XS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreData
+import GoogleSignIn
+import FirebaseAuth
+import FirebaseDatabase
 
 // Cell in Cuisine Preferences table
 class CuisincePrefCell : UITableViewCell {
@@ -33,7 +36,9 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var userCuisines:[String] = []
     var userDietaryRestrictions:[String] = []
-    
+    var ref: DatabaseReference!
+    var user: GIDGoogleUser!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +48,8 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         DRTable.delegate = self
         DRTable.dataSource = self
-        
-        print("Current User:", curUser)
+        ref = Database.database().reference()
+        user = GIDSignIn.sharedInstance()!.currentUser
         
     }
     
@@ -127,41 +132,56 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         checkboxAddToArray(array: &userDietaryRestrictions, checkbox: sender as! CheckBox)
     }
     
+    
+    func createUser() {
+        var userDP = URL(string: "")
+        if (user?.profile.hasImage)! {
+            userDP = user?.profile.imageURL(withDimension: 200)
+        }
+
+        if let userID = user?.userID  {
+            let userObject: NSDictionary = [
+                "uID" : userID,
+                "email" : user?.profile.email,
+                "name" : user?.profile.name,
+                "givenName" : user?.profile.givenName,
+                "image": userDP!.absoluteString,
+                "cuisines": userCuisines,
+                "restrictions": userDietaryRestrictions
+            ]
+            self.ref.child("users/\(userID)").setValue(userObject)
+        }
+    }
+    
     // Save data and segue to next screen
     @IBAction func doneButton(_ sender: Any) {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
+        self.createUser()
         
-        // Add all cuisine preferences to core data
-        for cuisinePref in userCuisines {
-            let entity = NSEntityDescription.entity(forEntityName: "CuisinePref", in: context)
-            let addCP = NSManagedObject(entity: entity!, insertInto: context)
-            
-            // Create cuisine preference
-            addCP.setValue(cuisinePref, forKey: "prefName")
-            
-            // Add cuisine preference to users
-            addCP.setValue(curUser, forKey: "user")
-        }
+//        // Store email in Core Data
+
         
-        // Add all dietary restrictions to core data
-        for dietaryRestr in dietaryRestrictions {
-            let entity = NSEntityDescription.entity(forEntityName: "DietaryRestr", in: context)
-            let addDR = NSManagedObject(entity: entity!, insertInto: context)
-            
-            // Create Dietary Restriction
-            addDR.setValue(dietaryRestr, forKey: "restrName")
-            
-            // Add dietary restriction to user
-            addDR.setValue(curUser, forKey: "user")
-        }
-        
-        do {
-           try context.save()
-          } catch {
-           print("Failed saving")
-        }
+//        let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+//        newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
+//        newUser.setValue(curUserNotif, forKey: "notifications")
+//        newUser.setValue(true, forKey: "darkMode")
+//
+//        do {
+//            try context.save()
+//            } catch {
+//            print("Failed saving")
+//        }
+//
+//        curUser = newUser // Save current user globally
+//
+//        do {
+//           try context.save()
+//          } catch {
+//           print("Failed saving")
+//        }
         
     }
     

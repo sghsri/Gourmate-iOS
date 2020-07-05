@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CuisinePref" representedClassName="CuisinePref" syncable="YES" codeGenerationType="class">
-        <attribute name="prefName" attributeType="String"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="cuisinePreferences" inverseEntity="User"/>
-    </entity>
-    <entity name="DietaryRestr" representedClassName="DietaryRestr" syncable="YES" codeGenerationType="class">
-        <attribute name="restrName" optional="YES" attributeType="String"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="dietaryRestrictions" inverseEntity="User"/>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="darkMode" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="email" attributeType="String"/>
         <attribute name="notifications" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <relationship name="cuisinePreferences" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CuisinePref" inverseName="user" inverseEntity="CuisinePref"/>
-        <relationship name="dietaryRestrictions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DietaryRestr" inverseName="user" inverseEntity="DietaryRestr"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="email"/>
@@ -21,8 +11,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="CuisinePref" positionX="-54" positionY="0" width="128" height="73"/>
-        <element name="DietaryRestr" positionX="-36" positionY="9" width="128" height="73"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="User" positionX="-265.84765625" positionY="-232.91015625" width="128" height="88"/>
     </elements>
 </model>
