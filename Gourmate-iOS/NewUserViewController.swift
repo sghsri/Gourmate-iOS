@@ -147,7 +147,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
                 "givenName" : user?.profile.givenName,
                 "image": userDP!.absoluteString,
                 "cuisines": userCuisines,
-                "restrictions": userDietaryRestrictions
+                "restrictions": userDietaryRestrictions.count > 0 ? userDietaryRestrictions : ["None"]
             ]
             self.ref.child("users/\(userID)").setValue(userObject)
         }
