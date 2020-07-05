@@ -18,7 +18,8 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var searchBar: UISearchBar!
     var searchActive: Bool = false
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var allMatesTable: UITableView!
+    @IBOutlet weak var selectedMatesTable: UITableView!
     @IBOutlet weak var matesLabel: UILabel!
     var mates:[MateObject] = []
     var filtered:[MateObject] = []
@@ -27,8 +28,10 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
+        allMatesTable.delegate = self
+        allMatesTable.dataSource = self
+        selectedMatesTable.delegate = self
+        selectedMatesTable.dataSource = self
         searchBar.delegate = self
         ref = Database.database().reference()
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -37,14 +40,13 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
                     self.mates.append(MateObject(mateObj: child.value as! NSDictionary))
                     self.filtered = self.mates
                 }
-                self.tableView.reloadData()
+                self.allMatesTable.reloadData()
             }
         })
-        redrawCurrentGroup()
         // Do any additional setup after loading the view.
     }
     
-
+    
     func textFieldShouldReturn(textField:UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -57,67 +59,65 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true;
     }
-
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false;
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
     }
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-         filtered = mates.filter({ (mate) -> Bool in
+        filtered = mates.filter({ (mate) -> Bool in
             let tmp: String = mate.name
-             return tmp.hasPrefix(searchText)
-         })
-         if(filtered.count == 0){
-             searchActive = false;
-         } else {
-             searchActive = true;
-         }
-         self.tableView.reloadData()
-     }
+            return tmp.hasPrefix(searchText)
+        })
+        if(filtered.count == 0){
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        self.allMatesTable.reloadData()
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(searchActive) {
-            return filtered.count
+        if tableView == allMatesTable {
+            if(searchActive) {
+                return filtered.count
+            }
+            return mates.count;
+        } else {
+            return selected.count;
         }
-        return mates.count;
-    }
-    
-    func redrawCurrentGroup(){
-        var currentGroup = "No Mates"
-        if selected.count > 0 {
-            currentGroup = selected.map({ (mate) -> String in
-                mate.name
-                }).joined(separator: ", ")
-        }
-        self.matesLabel.text = currentGroup
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = self.searchActive ? filtered[indexPath.row] : mates[indexPath.row]
-        if selected.contains(user) {
+        if tableView == allMatesTable {
+            let user = self.searchActive ? filtered[indexPath.row] : mates[indexPath.row]
+            if !selected.contains(user) {
+                selected.append(user)
+            }
+            self.allMatesTable.deselectRow(at: indexPath, animated: true)
+        } else {
+            let user = selected[indexPath.row]
             if let index = selected.firstIndex(of: user) {
                 selected.remove(at: index)
             }
-        } else {
-            selected.append(user)
         }
-        self.tableView.deselectRow(at: indexPath, animated: true)
-        redrawCurrentGroup()
+        
+        self.selectedMatesTable.reloadData()
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
-        let source = self.searchActive ? self.filtered : self.mates
+        let source = tableView == allMatesTable ? self.searchActive ? self.filtered : self.mates : selected;
         let mate = source[indexPath.row]
         cell.mateName.text = mate.name
         let imageURL = URL(string: mate.image)
