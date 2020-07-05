@@ -10,16 +10,28 @@ import UIKit
 import CoreData
 import Firebase
 import GoogleSignIn
+import UserNotifications
+
+var curUserNotif = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate  {
 
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      // Initialize sign-in
-      FirebaseApp.configure()
-      GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        // Initialize sign-in
+        FirebaseApp.configure()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        
+        // Ask to enable notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: .alert, completionHandler: {
+            (success, error) in
+            if success {
+                curUserNotif = true
+            } else {
+                curUserNotif = false
+            }
+        })
 
       return true
     }

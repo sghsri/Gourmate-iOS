@@ -103,6 +103,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         return UITableViewCell()
     }
     
+    // Add/remove preference to local array
     func checkboxAddToArray( array: inout [String], checkbox: CheckBox){
         
         // Has just been unchecked
@@ -116,18 +117,18 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    // Add/remove cuisine preference
     @IBAction func cuisineCheckbox(_ sender: Any) {
         checkboxAddToArray(array: &userCuisines, checkbox: sender as! CheckBox)
     }
     
+    // Add/remove dietary restriction
     @IBAction func drCheckbox(_ sender: Any) {
         checkboxAddToArray(array: &userDietaryRestrictions, checkbox: sender as! CheckBox)
-        
     }
     
+    // Save data and segue to next screen
     @IBAction func doneButton(_ sender: Any) {
-        print(userCuisines)
-        print(userDietaryRestrictions)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -142,12 +143,6 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // Add cuisine preference to users
             addCP.setValue(curUser, forKey: "user")
-            
-            do {
-               try context.save()
-              } catch {
-               print("Failed saving")
-            }
         }
         
         // Add all dietary restrictions to core data
@@ -160,29 +155,14 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // Add dietary restriction to user
             addDR.setValue(curUser, forKey: "user")
-            
-            do {
-               try context.save()
-              } catch {
-               print("Failed saving")
-            }
         }
         
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        request.returnsObjectsAsFaults = false
         do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "email") as! String)
-                print(data.value(forKey: "cuisinePreferences")!)
-                print(data.value(forKey: "dietaryRestrictions")!)
-          }
-            
-        } catch {
-            
-            print("Failed")
+           try context.save()
+          } catch {
+           print("Failed saving")
         }
+        
     }
     
 }

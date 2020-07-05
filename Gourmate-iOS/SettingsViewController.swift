@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import UserNotifications
 
 // Settings Table custom cell
 class SettingsTableCell: UITableViewCell {
@@ -59,6 +61,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Put identifier on switch
         cell.settingsSwitch.restorationIdentifier = "\(settings[indexPath.row]) Identifier"
+        
+        // Set switch on/off
+        if settings[indexPath.row] == "Dark Mode" {
+            cell.settingsSwitch.isOn = curUser.value(forKey: "darkMode") as! Bool
+        }
+        else if settings[indexPath.row] == "Notifications" {
+            cell.settingsSwitch.isOn = curUser.value(forKey: "notifications") as! Bool
+        }
+        
         return cell
     }
     
@@ -70,14 +81,26 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if selectedSwitch.restorationIdentifier == "Notifications Identifier" {
             if selectedSwitch.isOn {
                 print("Turned notifications on")
+                UNUserNotificationCenter.current().requestAuthorization(options: .alert, completionHandler: {
+                    (success, error) in
+                    if success {
+                        curUser.setValue(true, forKey: "notifications")
+                    } else {
+                        UIApplication.shared.unregisterForRemoteNotifications()
+                        selectedSwitch.isOn = false
+                    }
+                })
             } else {
                 print("Turned notifications off")
+                UIApplication.shared.unregisterForRemoteNotifications()
+                curUser.setValue(false, forKey: "notifications")
             }
         
         // Dark mode switch
         } else if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
             if selectedSwitch.isOn {
                 print("Turned dark mode on")
+                curUser.setValue(true, forKey: "darkMode")
 
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .dark
@@ -85,6 +108,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
             } else {
                 print("Turned dark mode off")
+                curUser.setValue(false, forKey: "darkMode")
 
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .light

@@ -67,6 +67,15 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
 
                         // Already have this user - fetch current data
                         if let curEmail = user.value(forKey:"email"), (email == curEmail as? String){
+                            user.setValue(curUserNotif, forKey: "notifications")
+
+                            do {
+                                try context.save()
+                                } catch {
+                                print("Failed saving")
+                            }
+                            
+                            print("setting bool values")
                             curUser = user // Save current user globally
                             found = true
                             self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
@@ -83,6 +92,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(email, forKey: "email")
+                    newUser.setValue(curUserNotif, forKey: "notifications")
+                    newUser.setValue(true, forKey: "darkMode")
                     
                     do {
                         try context.save()

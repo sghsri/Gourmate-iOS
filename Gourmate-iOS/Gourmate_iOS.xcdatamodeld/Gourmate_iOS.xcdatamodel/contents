@@ -9,7 +9,9 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="dietaryRestrictions" inverseEntity="User"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="darkMode" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="email" attributeType="String"/>
+        <attribute name="notifications" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <relationship name="cuisinePreferences" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CuisinePref" inverseName="user" inverseEntity="CuisinePref"/>
         <relationship name="dietaryRestrictions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DietaryRestr" inverseName="user" inverseEntity="DietaryRestr"/>
         <uniquenessConstraints>
@@ -19,8 +21,8 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="CuisinePref" positionX="-54" positionY="0" width="128" height="73"/>
         <element name="DietaryRestr" positionX="-36" positionY="9" width="128" height="73"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="118"/>
     </elements>
 </model>
