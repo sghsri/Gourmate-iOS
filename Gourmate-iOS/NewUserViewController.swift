@@ -25,7 +25,7 @@ class DietaryRestrictionCell : UITableViewCell {
 }
 
 class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var welcomeText: UILabelPadding!
     @IBOutlet weak var cuisineText: UILabelPadding!
     @IBOutlet weak var cuisineTable: UITableView!
@@ -38,7 +38,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
     var userDietaryRestrictions:[String] = []
     var ref: DatabaseReference!
     var user: GIDGoogleUser!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,8 +115,8 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         if checkbox.isChecked {
             
             array.removeAll{$0 == checkbox.restorationIdentifier}
-           
-        // Has just been checked
+            
+            // Has just been checked
         } else {
             array.append(checkbox.restorationIdentifier!)
         }
@@ -138,7 +138,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         if (user?.profile.hasImage)! {
             userDP = user?.profile.imageURL(withDimension: 200)
         }
-
+        
         if let userID = user?.userID  {
             let userObject: NSDictionary = [
                 "uID" : userID,
@@ -159,29 +159,25 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         self.createUser()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
         
-//        // Store email in Core Data
-
+        // Store email in Core Data
         
-//        let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
-//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-//        newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
-//        newUser.setValue(curUserNotif, forKey: "notifications")
-//        newUser.setValue(true, forKey: "darkMode")
-//
-//        do {
-//            try context.save()
-//            } catch {
-//            print("Failed saving")
-//        }
-//
-//        curUser = newUser // Save current user globally
-//
-//        do {
-//           try context.save()
-//          } catch {
-//           print("Failed saving")
-//        }
+        
+        let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+        newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
+        newUser.setValue(curUserNotif, forKey: "notifications")
+        newUser.setValue(true, forKey: "darkMode")
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+        
+        curUser = newUser // Save current user globally
         
     }
     
