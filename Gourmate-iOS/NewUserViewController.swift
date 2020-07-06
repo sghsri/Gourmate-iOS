@@ -163,8 +163,6 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         request.returnsObjectsAsFaults = false
         
         // Store email in Core Data
-        
-        
         let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
         newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")

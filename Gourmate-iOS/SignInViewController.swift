@@ -12,7 +12,7 @@ import FirebaseDatabase
 import GoogleSignIn
 import CoreData
 
-var curUser:NSManagedObject = NSManagedObject()
+var curUser:NSManagedObject!
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
     
@@ -32,7 +32,6 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         // Do any additional setup after+++ loading the view.
     }
     
-    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             print(error.localizedDescription)
@@ -50,33 +49,65 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                 
                 if let userID = user.userID  {
                     self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
-                        // Existing user
+                        // Existing user in Firebase
                         if snapshot.hasChild("\(userID)"){
-                            self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
-                        // New User
-                        } else{
+                            
+                            // Find existing user in Core Data
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             let context = appDelegate.persistentContainer.viewContext
-                            
                             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-                            request.returnsObjectsAsFaults = false
-                            let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
-                            let newUser = NSManagedObject(entity: entity!, insertInto: context)
-                            newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
-                            newUser.setValue(curUserNotif, forKey: "notifications")
-                            newUser.setValue(false, forKey: "darkMode")
-                            curUser = newUser // Save current user globally
-
+                                    
+                            var fetchedResults: [NSManagedObject]? = nil
+                            
                             do {
-                                try context.save()
+                                try fetchedResults = context.fetch(request) as? [NSManagedObject]
                             } catch {
-                                print("Failed saving")
+                                // if an error occurs
+                                let nserror = error as NSError
+                                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                                abort()
                             }
                             
+                            var found = false
+                            
+                            // Search through core data for current user
+                            for user in fetchedResults! {
+                                if let curEmail = user.value(forKey:"email"), curEmail as? String == email {
+                                    // Found user in Core Data
+                                    print(email ?? 0)
+                                    curUser = user
+                                    found = true
+                                    print("Assigned user")
+                                }
+                            }
+
+                            // User is not in Core Data - create new user
+                            // TODO: possible addition is to store preferences in Firebase and create new user based on those preferences
+                            if !found {
+                                let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                                let newUser = NSManagedObject(entity: entity!, insertInto: context)
+                                newUser.setValue(GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
+                                newUser.setValue(curUserNotif, forKey: "notifications")
+                                newUser.setValue(false, forKey: "darkMode")
+                                curUser = newUser // Save current user globally
+
+                                do {
+                                    try context.save()
+                                } catch {
+                                    print("Failed saving")
+                                }
+                            }
+                            
+                            // Go to Group Screen
+                            self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
+                        // New User
+                        } else {
+                            
+                            // Go to New User Screen
                             self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                         }
-                    }
-                    )}
+                    })
+                }
             }
         }
     }

@@ -116,6 +116,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
             }
         }
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        // Save new value
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
     }
 
 }
