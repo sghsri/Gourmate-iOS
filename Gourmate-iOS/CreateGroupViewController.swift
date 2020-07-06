@@ -109,7 +109,6 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
                 selected.remove(at: index)
             }
         }
-        
         self.selectedMatesTable.reloadData()
     }
     

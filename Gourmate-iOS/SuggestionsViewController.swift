@@ -10,7 +10,13 @@ import UIKit
 import Alamofire
 import CoreLocation
 
-class SuggestionsViewController: UIViewController, CLLocationManagerDelegate {
+class PlaceCell : UITableViewCell {
+    @IBOutlet weak var placeNameLabel: UILabel!
+    
+}
+
+class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+
     var latitude = 0.0
     var longitude = 0.0
 
@@ -18,8 +24,12 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate {
     var startLocation: CLLocation!
     
     var selectedUsers:[MateObject] = []
+    var places:[[String : Any]] = []
+    @IBOutlet weak var placesTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        placesTableView.delegate = self
+        placesTableView.dataSource = self
 
         // Set up location manager
         locationManager.delegate = self
@@ -29,6 +39,23 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate {
         startLocation = nil
         
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.places.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath) as! PlaceCell
+        let source = self.places
+        let place = source[indexPath.row]
+        cell.placeNameLabel.text = place["name"] as! String
+        return cell
+    }
+    
 
     func aggregateCuisines() -> Array<String>{
         var cuisines:Set = Set<String>()
@@ -85,19 +112,20 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate {
                 case let .success(value):
                     print(value)
                     if let array = value as? [[String : Any]] {
-                        for dict in array {
-                            guard
-                                let business_status = dict["business_status"] as? String,
-                                let name = dict["name"],
-                                let rating = dict["rating"]
-                                
-                                else {
-                                    print("Error parsing \(dict)")
-                                    continue
-                                }
-                            
-                            print(business_status, name, rating)
-                        }
+                        self.places = array
+//                        for dict in array {
+//                            guard
+//                                let business_status = dict["business_status"] as? String,
+//                                let name = dict["name"],
+//                                let rating = dict["rating"]
+//
+//                                else {
+//                                    print("Error parsing \(dict)")
+//                                    continue
+//                                }
+//                            print(business_status, name, rating)
+//                        }
+                        self.placesTableView.reloadData()
                     }
 
                 case let .failure(error):
