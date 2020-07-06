@@ -22,6 +22,7 @@ class BarChartView: UIView {
     let barHeight: CGFloat = 20.0
     let contentSpace: CGFloat = 44.0
     var maxBarLength: Int = 100
+    var darkMode: Bool = false
     
     var dataEntries: [BarEntry] = [] {
     didSet {
@@ -56,9 +57,9 @@ class BarChartView: UIView {
         let xPos: CGFloat = translateWidthValueToXPosition(value:
         Float(entry.score) / Float(maxBarLength))
         let yPos: CGFloat = space + CGFloat(index) * (barHeight + space)
-        drawBar(xPos: xPos, yPos: yPos, index: index)
-        drawTextValue(xPos: 16.0 + 300, yPos: yPos + 2.0, textValue: "\(entry.score)")
-        drawTitle(xPos: 16.0, yPos: yPos + 4.0, width: 150.0, height: 20.0, title: entry.title)
+        drawBar(xPos: xPos , yPos: yPos, index: index)
+        drawTextValue(xPos: 16.0 + 275, yPos: yPos + 2.0, textValue: "\(entry.score)")
+        drawTitle(xPos: 14.0, yPos: yPos + 2.0, width: 150.0, height: 20.0, title: entry.title)
     }
     
     private func drawBar(xPos: CGFloat, yPos: CGFloat, index: Int) {
@@ -72,11 +73,10 @@ class BarChartView: UIView {
     private func drawTextValue(xPos: CGFloat, yPos: CGFloat, textValue: String) {
        let textLayer = CATextLayer()
        textLayer.frame = CGRect(x: xPos, y: yPos, width: 33, height: 80.0)
-       textLayer.foregroundColor = UIColor.black.cgColor
+       textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
        textLayer.backgroundColor = UIColor.clear.cgColor
        textLayer.alignmentMode = CATextLayerAlignmentMode.center
        textLayer.contentsScale = UIScreen.main.scale
-       textLayer.font = CTFontCreateWithName(UIFont.systemFont(ofSize: 14.0).fontName as CFString, 0, nil)
        textLayer.fontSize = 14
        textLayer.string = textValue
        mainLayer.addSublayer(textLayer)
@@ -85,11 +85,10 @@ class BarChartView: UIView {
     private func drawTitle(xPos: CGFloat, yPos: CGFloat, width: CGFloat, height: CGFloat = 22, title: String) {
        let textLayer = CATextLayer()
        textLayer.frame = CGRect(x: xPos, y: yPos, width: width, height: height)
-       textLayer.foregroundColor = UIColor.black.cgColor
+       textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
        textLayer.backgroundColor = UIColor.clear.cgColor
        textLayer.alignmentMode = CATextLayerAlignmentMode.left
        textLayer.contentsScale = UIScreen.main.scale
-       textLayer.font = CTFontCreateWithName(UIFont.boldSystemFont(ofSize: 14.0).fontName as CFString, 0, nil)
        textLayer.fontSize = 14
        textLayer.string = title
        mainLayer.addSublayer(textLayer)

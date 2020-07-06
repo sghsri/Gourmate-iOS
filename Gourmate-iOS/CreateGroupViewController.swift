@@ -114,10 +114,17 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.selectedMatesTable.reloadData()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { if segue.identifier == "makeGroupIdentifier", let nextVC = segue.destination as?
+    // Send selected users to other screens
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "makeGroupIdentifier", let nextVC = segue.destination as?
                    SuggestionsViewController {
                     nextVC.selectedUsers = self.selected
                }
+        if segue.identifier == "groupAnalysisSegue", let nextVC = segue.destination as?
+            GroupAnalysisViewController {
+             nextVC.selectedUsers = self.selected
+        }
     }
     
     
