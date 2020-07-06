@@ -85,7 +85,6 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.allMatesTable.reloadData()
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == allMatesTable {
             if(searchActive) {

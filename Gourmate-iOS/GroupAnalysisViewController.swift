@@ -54,7 +54,7 @@ class GroupAnalysisViewController: UIViewController, UITableViewDelegate, UITabl
         barChartView.darkMode = self.traitCollection.userInterfaceStyle == .dark
         
         // Set maximum bar length
-        barChartView.maxBarLength = totalCuisines * 2
+        barChartView.maxBarLength = (totalCuisines == 0 ? 5 : totalCuisines) * 2
         
         // Create cuisine preferences bar chart
         barChartView.dataEntries = barEntries
@@ -100,10 +100,10 @@ class GroupAnalysisViewController: UIViewController, UITableViewDelegate, UITabl
     
     // Get all cuisines from the selected users
     func aggregateCuisines() -> Array<String>{
-        var cuisines:Set = Set<String>()
+        var cuisines:Array = Array<String>()
         for user in selectedUsers {
             for cuisine in user.cuisines {
-                cuisines.insert(cuisine)
+                cuisines.append(cuisine)
             }
         }
         return Array(cuisines)
