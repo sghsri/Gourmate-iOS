@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import CoreLocation
 import Firebase
 import GoogleSignIn
 import UserNotifications
@@ -19,7 +18,6 @@ var curUserNotif = false
 class AppDelegate: UIResponder, UIApplicationDelegate  {
     
     let center = UNUserNotificationCenter.current()
-    let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Initialize sign-in
@@ -35,9 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
                 curUserNotif = false
             }
         })
-        
-        // Ask to enable location permissions
-//        locationManager.requestAlwaysAuthorization()
 
       return true
     }
