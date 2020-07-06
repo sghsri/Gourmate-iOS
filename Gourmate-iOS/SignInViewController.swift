@@ -74,10 +74,13 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                             for user in fetchedResults! {
                                 if let curEmail = user.value(forKey:"email"), curEmail as? String == email {
                                     // Found user in Core Data
-                                    print(email ?? 0)
                                     curUser = user
                                     found = true
-                                    print("Assigned user")
+                                    let darkMode = user.value(forKey:"darkMode")
+                                    UIApplication.shared.windows.forEach { window in
+                                        window.overrideUserInterfaceStyle = (darkMode as! Bool) ? .dark : .light
+                                    }
+                                    
                                 }
                             }
 
