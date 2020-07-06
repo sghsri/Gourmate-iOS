@@ -114,6 +114,12 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.selectedMatesTable.reloadData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { if segue.identifier == "makeGroupIdentifier", let nextVC = segue.destination as?
+                   SuggestionsViewController {
+                    nextVC.selectedUsers = self.selected
+               }
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
