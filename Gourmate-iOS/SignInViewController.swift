@@ -50,7 +50,11 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                 
                 if let userID = user.userID  {
                     self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                        // Existing user
                         if snapshot.hasChild("\(userID)"){
+                            self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
+                        // New User
+                        } else{
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             let context = appDelegate.persistentContainer.viewContext
                             
@@ -60,7 +64,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                             let newUser = NSManagedObject(entity: entity!, insertInto: context)
                             newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
                             newUser.setValue(curUserNotif, forKey: "notifications")
-                            newUser.setValue(true, forKey: "darkMode")
+                            newUser.setValue(false, forKey: "darkMode")
                             curUser = newUser // Save current user globally
 
                             do {
@@ -68,8 +72,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                             } catch {
                                 print("Failed saving")
                             }
-                            self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
-                        } else{
+                            
                             self.performSegue(withIdentifier: "newUserSegue", sender: nil)
                         }
                     }
