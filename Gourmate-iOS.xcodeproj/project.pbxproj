@@ -23,6 +23,7 @@
 		34F909C924AA4B730025FC6D /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F909C824AA4B730025FC6D /* Checkbox.swift */; };
 		34F90A2424B27D330025FC6D /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F90A2324B27D330025FC6D /* BarChart.swift */; };
 		34F90A2624B27D620025FC6D /* GroupAnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F90A2524B27D610025FC6D /* GroupAnalysisViewController.swift */; };
+		34F90A2824B28EDA0025FC6D /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F90A2724B28EDA0025FC6D /* SuggestionsViewController.swift */; };
 		4A3AFE05F7ED4095B9F094B4 /* Pods_Gourmate_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045C040FB44F7EF73A915462 /* Pods_Gourmate_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		34F909C824AA4B730025FC6D /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		34F90A2324B27D330025FC6D /* BarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		34F90A2524B27D610025FC6D /* GroupAnalysisViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupAnalysisViewController.swift; sourceTree = "<group>"; };
+		34F90A2724B28EDA0025FC6D /* SuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsViewController.swift; sourceTree = "<group>"; };
 		50AD52FE2C5175E85B34AE72 /* Pods-Gourmate-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.release.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		5C7DEF5834B7799A7C294666 /* Pods-Gourmate-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmate-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Gourmate-iOS/Pods-Gourmate-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				342293C024A5686C0054368B /* UILabelPadding.swift */,
 				34F909C824AA4B730025FC6D /* Checkbox.swift */,
 				1FB5A3E724B27FA300DFD3CE /* MateObject.swift */,
+				34F90A2724B28EDA0025FC6D /* SuggestionsViewController.swift */,
 			);
 			path = "Gourmate-iOS";
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34F90A2824B28EDA0025FC6D /* SuggestionsViewController.swift in Sources */,
 				34F909C924AA4B730025FC6D /* Checkbox.swift in Sources */,
 				1F9153BE24956FB600C45437 /* SignInViewController.swift in Sources */,
 				342293C124A5686C0054368B /* UILabelPadding.swift in Sources */,

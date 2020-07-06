@@ -6,6 +6,7 @@ target 'Gourmate-iOS' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'GoogleSignIn', '~> 5.0'
+  pod 'Alamofire'
   # Pods for Gourmate-iOS
   # add pods for desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods

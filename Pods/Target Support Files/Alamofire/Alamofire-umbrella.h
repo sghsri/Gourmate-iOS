@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double SearchableTableViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char SearchableTableViewVersionString[];
+FOUNDATION_EXPORT double AlamofireVersionNumber;
+FOUNDATION_EXPORT const unsigned char AlamofireVersionString[];
 

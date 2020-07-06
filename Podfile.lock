@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.2.1)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -69,12 +70,14 @@ PODS:
   - PromisesObjC (1.2.9)
 
 DEPENDENCIES:
+  - Alamofire
   - Firebase/Auth
   - Firebase/Database
   - GoogleSignIn (~> 5.0)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
     - Firebase
     - FirebaseAuth
@@ -92,6 +95,7 @@ SPEC REPOS:
     - PromisesObjC
 
 SPEC CHECKSUMS:
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   Firebase: fc4cbf6f1592636431821ef9a3c557e4dfd9f268
   FirebaseAuth: b85c064e0ac60f82486728d50a4803f235687302
@@ -108,6 +112,6 @@ SPEC CHECKSUMS:
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
 
-PODFILE CHECKSUM: 0b7b606b0c56a436c3926aff16ede2cfd100c81e
+PODFILE CHECKSUM: 29e29076e8a01d0dfb9f67cffd2dbfadeeb2dcbd
 
 COCOAPODS: 1.9.3
