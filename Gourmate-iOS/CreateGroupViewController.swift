@@ -37,8 +37,10 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
             if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
                 for child in snapshots {
-                    if let mate = child.value as? NSDictionary, curUserEmail != mate["email"] as! String {
+                    if let mate = child.value as? NSDictionary, curUserEmail != mate["email"] as? String {
                         self.mates.append(MateObject(mateObj: mate))
+                    } else if let mate = child.value as? NSDictionary {
+                        self.selected.append(MateObject(mateObj: mate))
                     }
                     self.filtered = self.mates
                 }
@@ -94,7 +96,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
             }
             return mates.count;
         } else {
-            return selected.count;
+            return selected.count - 1;
         }
     }
     
@@ -134,7 +136,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
         let source = tableView == allMatesTable ? self.searchActive ? self.filtered : self.mates : selected;
-        let mate = source[indexPath.row]
+        let mate = source == selected ? source[indexPath.row + 1] : source[indexPath.row]
         cell.mateName.text = mate.name
         let imageURL = URL(string: mate.image)
         DispatchQueue.global().async {
