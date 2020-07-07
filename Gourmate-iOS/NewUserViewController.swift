@@ -63,7 +63,6 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    
     // Number of rows in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == cuisineTable {
@@ -87,7 +86,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.cuisineLabel.text = cuisineText
             
             // Set identifier for checkbox
-            cell.checkbox.isChecked = false // mark all as unchecked
+            cell.checkbox.isChecked = find(value: cuisineText, in: userCuisines) // mark unchecked if not in list
             cell.checkbox.restorationIdentifier = "\(cuisines[indexPath.row])"
             
             return cell
@@ -99,13 +98,23 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.DRLabel.text = DRText
             
             // Set identifier for checkbox
-            cell.checkbox.isChecked = false // mark all as unchecked
+            cell.checkbox.isChecked = find(value: DRText, in: userDietaryRestrictions) // mark unchecked if not in list
             cell.checkbox.restorationIdentifier = "\(dietaryRestrictions[indexPath.row])"
             
             return cell
         }
         print ("No table association")
         return UITableViewCell()
+    }
+    
+    // Find value in array and return true/false
+    func find(value searchValue: String, in array: [String]) -> Bool {
+        for (_, value) in array.enumerated() {
+            if value == searchValue {
+                return true
+            }
+        }
+        return false
     }
     
     // Add/remove preference to local array
