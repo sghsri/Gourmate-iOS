@@ -37,7 +37,9 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
             if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
                 for child in snapshots {
-                    self.mates.append(MateObject(mateObj: child.value as! NSDictionary))
+                    if let mate = child.value as? NSDictionary, curUserEmail != mate["email"] as! String {
+                        self.mates.append(MateObject(mateObj: mate))
+                    }
                     self.filtered = self.mates
                 }
                 self.allMatesTable.reloadData()
@@ -96,13 +98,16 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    // Action for selecting row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Selecting on Mates table will move mate to selected group table
         if tableView == allMatesTable {
             let user = self.searchActive ? filtered[indexPath.row] : mates[indexPath.row]
             if !selected.contains(user) {
                 selected.append(user)
             }
             self.allMatesTable.deselectRow(at: indexPath, animated: true)
+        // Selecting on Selected group table will move mate back
         } else {
             let user = selected[indexPath.row]
             if let index = selected.firstIndex(of: user) {
@@ -125,7 +130,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
+    // Data in the row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
         let source = tableView == allMatesTable ? self.searchActive ? self.filtered : self.mates : selected;

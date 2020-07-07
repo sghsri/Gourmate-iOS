@@ -13,6 +13,7 @@ import GoogleSignIn
 import CoreData
 
 var curUser:NSManagedObject!
+var curUserEmail:String!
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
     
@@ -75,6 +76,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                                 if let curEmail = user.value(forKey:"email"), curEmail as? String == email {
                                     // Found user in Core Data
                                     curUser = user
+                                    curUserEmail = email
                                     found = true
                                     let darkMode = user.value(forKey:"darkMode")
                                     UIApplication.shared.windows.forEach { window in

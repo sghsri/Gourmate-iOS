@@ -174,7 +174,8 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Store email in Core Data
         let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
-        newUser.setValue( GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
+        let curEmail = GIDSignIn.sharedInstance()!.currentUser.profile.email
+        newUser.setValue(curEmail, forKey: "email")
         newUser.setValue(curUserNotif, forKey: "notifications")
         newUser.setValue(true, forKey: "darkMode")
         
@@ -185,6 +186,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         curUser = newUser // Save current user globally
+        curUserEmail = curEmail
         
     }
     
