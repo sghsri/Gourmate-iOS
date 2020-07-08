@@ -16,6 +16,7 @@ class PlaceCell : UITableViewCell {
     @IBOutlet weak var indexLabel: UILabel!
     @IBOutlet weak var cuisineLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
 }
 
 class GourmateButton : UIButton {
@@ -108,7 +109,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         
         cell.addressLabel.text = place["vicinity"] as? String
         
-        
+        cell.ratingLabel.text = "\(place["rating"] as! Double) ⭑ (\(place["user_ratings_total"] as! Int) ratings)"
         cell.placeImageView.layer.borderWidth = 1
         cell.placeImageView.layer.masksToBounds = false
         cell.placeImageView.layer.borderColor = index % 2 == 0 ? UIColor.systemYellow.cgColor : UIColor.systemRed.cgColor

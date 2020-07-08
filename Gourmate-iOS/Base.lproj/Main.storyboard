@@ -260,6 +260,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baf-HO-OPs">
+                                                    <rect key="frame" x="125" y="57" width="154" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9u-7P-fzn">
                                                     <rect key="frame" x="125" y="78" width="210" height="56"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -275,6 +282,7 @@
                                             <outlet property="indexLabel" destination="zpk-wA-5nZ" id="mAw-xV-oTN"/>
                                             <outlet property="placeImageView" destination="p3q-zT-BIh" id="4jh-ow-yCg"/>
                                             <outlet property="placeNameLabel" destination="61K-pK-GKN" id="w6T-T3-lJ3"/>
+                                            <outlet property="ratingLabel" destination="baf-HO-OPs" id="Oa4-EY-iko"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
