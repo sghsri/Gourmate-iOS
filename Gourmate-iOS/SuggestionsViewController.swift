@@ -93,7 +93,11 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let place = self.places[indexPath.row]
+        let location = (place["geometry"] as! NSDictionary)["location"] as! NSDictionary
+        let url = "https://www.google.com/maps/@\(location["lat"] as! Double),\(location["lng"] as! Double),20z"
         
+        UIApplication.shared.openURL(NSURL(string: url)! as URL)
     }
     
     
