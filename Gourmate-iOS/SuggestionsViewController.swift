@@ -25,6 +25,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var indicator = UIActivityIndicatorView()
     
     var selectedUsers:[MateObject] = []
     var places:[[String : Any]] = []
@@ -33,9 +34,9 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         super.viewDidLoad()
         placesTableView.delegate = self
         placesTableView.dataSource = self
-        placesTableView.rowHeight = 100;
+        placesTableView.rowHeight = 120;
         placesTableView.separatorColor = UIColor.clear
-
+        
         // Set up location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -43,6 +44,13 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         locationManager.startUpdatingLocation()
         startLocation = nil
         
+    }
+    
+    func activityIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.style = UIActivityIndicatorView.Style.gray
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,7 +65,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     func styleTableViewCell(cell:PlaceCell, place:[String:Any?], index:Int){
         
         cell.contentView.setCardView()
-
+        
         cell.indexLabel.text = "\(index)"
         cell.placeNameLabel.text = place["name"] as? String
         cell.placeNameLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
@@ -149,13 +157,16 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         
         // Make API request on lodaing view
         if startLocation == nil {
-            
+            activityIndicator()
+            indicator.startAnimating()
+            indicator.backgroundColor = .white
             // Parameters for API call
             let parameters = [
                 "location": ["latitude": latitude, "longitude": longitude, "radius": 500],
                 "cuisines": self.aggregateCuisines(),
                 "restrictions": self.aggregateRestrictions()
                 ] as [String : Any]
+            
             
             // Make API call
             AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -174,18 +185,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
                                 }
                             }
                         }
-                        //                        for dict in array {
-                        //                            guard
-                        //                                let business_status = dict["business_status"] as? String,
-                        //                                let name = dict["name"],
-                        //                                let rating = dict["rating"]
-                        //
-                        //                                else {
-                        //                                    print("Error parsing \(dict)")
-                        //                                    continue
-                        //                                }
-                        //                            print(business_status, name, rating)
-                        //                        }
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
                         self.placesTableView.reloadData()
                     }
                     
@@ -206,7 +207,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     }
 }
 extension UIView {
-
+    
     func setCardView(){
         layer.cornerRadius = 5.0
         layer.borderColor  =  UIColor.clear.cgColor
