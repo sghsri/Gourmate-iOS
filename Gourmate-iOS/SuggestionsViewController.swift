@@ -34,6 +34,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         placesTableView.delegate = self
         placesTableView.dataSource = self
         placesTableView.rowHeight = 100;
+        placesTableView.separatorColor = UIColor.clear
+
         // Set up location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -53,6 +55,9 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     
     
     func styleTableViewCell(cell:PlaceCell, place:[String:Any?], index:Int){
+        
+        cell.contentView.setCardView()
+
         cell.indexLabel.text = "\(index)"
         cell.placeNameLabel.text = place["name"] as? String
         cell.placeNameLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
@@ -67,6 +72,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         cell.placeImageView.layer.borderColor = index % 2 == 0 ? UIColor.systemYellow.cgColor : UIColor.systemRed.cgColor
         cell.placeImageView.layer.cornerRadius = cell.placeImageView.frame.height/2
         cell.placeImageView.clipsToBounds = true
+        cell.placeImageView.contentMode = .scaleToFill
         
         let size:CGFloat = 20.0
         cell.indexLabel.textColor = UIColor.white
@@ -197,6 +203,19 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
             GroupAnalysisViewController {
             nextVC.selectedUsers = self.selectedUsers
         }
+    }
+}
+extension UIView {
+
+    func setCardView(){
+        layer.cornerRadius = 5.0
+        layer.borderColor  =  UIColor.clear.cgColor
+        layer.borderWidth = 5.0
+        layer.shadowOpacity = 0.5
+        layer.shadowColor =  UIColor.lightGray.cgColor
+        layer.shadowRadius = 5.0
+        layer.shadowOffset = CGSize(width:5, height: 5)
+        layer.masksToBounds = true
     }
 }
 
