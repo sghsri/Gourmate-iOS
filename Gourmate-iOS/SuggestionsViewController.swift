@@ -65,8 +65,11 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         super.viewDidLoad()
         placesTableView.delegate = self
         placesTableView.dataSource = self
-        placesTableView.rowHeight = 120;
+        placesTableView.rowHeight = 130;
         placesTableView.separatorColor = UIColor.clear
+        placesTableView.layer.masksToBounds = true
+        placesTableView.layer.borderColor = UIColor.systemYellow.cgColor
+        placesTableView.layer.borderWidth = 4.0
         
         // Set up location manager
         locationManager.delegate = self
