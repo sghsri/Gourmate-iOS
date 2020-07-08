@@ -21,6 +21,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     var ref: DatabaseReference!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         googleSignInButton.style = GIDSignInButtonStyle.wide
         // Change all screens to dark mode
         UIApplication.shared.windows.forEach { window in
@@ -57,7 +58,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             let context = appDelegate.persistentContainer.viewContext
                             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-                                    
+                            
                             var fetchedResults: [NSManagedObject]? = nil
                             
                             do {
@@ -85,7 +86,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                                     
                                 }
                             }
-
+                            
                             // User is not in Core Data - create new user
                             // TODO: possible addition is to store preferences in Firebase and create new user based on those preferences
                             if !found {
@@ -95,7 +96,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                                 newUser.setValue(curUserNotif, forKey: "notifications")
                                 newUser.setValue(false, forKey: "darkMode")
                                 curUser = newUser // Save current user globally
-
+                                
                                 do {
                                     try context.save()
                                 } catch {
@@ -105,7 +106,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                             
                             // Go to Group Screen
                             self.performSegue(withIdentifier: "existingUserSegue", sender: nil)
-                        // New User
+                            // New User
                         } else {
                             
                             // Go to New User Screen

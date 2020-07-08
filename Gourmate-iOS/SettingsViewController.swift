@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import GoogleSignIn
 import UserNotifications
 
 // Settings Table custom cell
@@ -72,6 +73,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
     }
+    
+//    @IBAction func logOutButton(_ sender: Any) {
+//        GIDSignIn.sharedInstance().signOut()
+//
+//        self.present(SignInViewController(), animated: true, completion: nil)
+//    }
+
     
     // Change Core Data for setting that switch is associated with
     @IBAction func changeSwitch(_ sender: Any) {

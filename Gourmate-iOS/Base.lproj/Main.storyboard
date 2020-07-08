@@ -53,6 +53,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Rdh-Xl-ACC"/>
                     <connections>
                         <outlet property="googleSignInButton" destination="o9F-Ij-k7h" id="Fie-IB-yB2"/>
                         <segue destination="tun-vQ-tCr" kind="show" identifier="newUserSegue" id="dEh-GU-CFB"/>
@@ -360,9 +361,19 @@
                                 </prototypes>
                             </tableView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wlq-Yy-Yk2">
-                                <rect key="frame" x="87" y="611" width="240" height="128"/>
+                                <rect key="frame" x="81" y="545" width="252" height="198"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixJ-8V-sU7">
+                                <rect key="frame" x="180" y="813" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="logOutSegue" id="Xxb-X9-zRt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="39h-hj-8ly"/>
@@ -631,7 +642,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OpZ-Oc-1GV"/>
+        <segue reference="2KO-NF-EdM"/>
         <segue reference="eSi-7o-mIe"/>
         <segue reference="hTz-yf-qX5"/>
     </inferredMetricsTieBreakers>
