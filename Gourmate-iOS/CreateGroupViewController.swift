@@ -103,6 +103,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     // Action for selecting row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Selecting on Mates table will move mate to selected group table
+        print(selected)
         if tableView == allMatesTable {
             let user = self.searchActive ? filtered[indexPath.row] : mates[indexPath.row]
             if !selected.contains(user) {
@@ -111,13 +112,25 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
             self.allMatesTable.deselectRow(at: indexPath, animated: true)
         // Selecting on Selected group table will move mate back
         } else {
-            let user = selected[indexPath.row]
+            let user = selected[indexPath.row+1]
             if let index = selected.firstIndex(of: user) {
-                selected.remove(at: index)
+                let refreshAlert = UIAlertController(title: "Remove Mate", message: "Are you sure you want to remove this mate from your group?", preferredStyle: UIAlertController.Style.alert)
+
+                refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                    self.selected.remove(at: index)
+                    self.selectedMatesTable.reloadData()
+                }))
+
+                refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                      print("Handle Cancel Logic here")
+                }))
+
+                present(refreshAlert, animated: true, completion: nil)
             }
         }
         self.selectedMatesTable.reloadData()
     }
+    
     
     // Send selected users to other screens
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

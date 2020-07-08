@@ -177,11 +177,13 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
                     if var array = value as? [[String : Any]] {
                         self.places = array
                         for var place in self.places {
-                            let imageURL = URL(string: place["STORE_IMG"] as! String)
-                            DispatchQueue.global().async {
-                                let data = try? Data(contentsOf: imageURL!)
-                                DispatchQueue.main.async {
-                                    place["imgObject"] = UIImage(data: data!)
+                            if place["STORE_IMG"] != nil {
+                                let imageURL = URL(string: place["STORE_IMG"] as! String)
+                                DispatchQueue.global().async {
+                                    let data = try? Data(contentsOf: imageURL!)
+                                    DispatchQueue.main.async {
+                                        place["imgObject"] = UIImage(data: data!)
+                                    }
                                 }
                             }
                         }
