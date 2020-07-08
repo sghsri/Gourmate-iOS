@@ -182,16 +182,10 @@
                         <viewLayoutGuide key="safeArea" id="fUJ-b6-e5T"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Group" id="3hJ-rH-3C5">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Yhw-X6-tMI">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UJ4-YK-hzD">
-                                <rect key="frame" x="338" y="0.0" width="56" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <state key="normal" title="..."/>
-                                <connections>
-                                    <segue destination="ySn-aP-WaP" kind="show" id="DOD-th-xoE"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="BUO-2Q-aey">
+                            <connections>
+                                <segue destination="ySn-aP-WaP" kind="show" id="BEf-pa-Keu"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -300,7 +294,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="zOC-lA-LMm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xur-oj-7ad"/>
+                    <navigationItem key="navigationItem" id="xur-oj-7ad">
+                        <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="MhA-dJ-Yvl">
+                            <connections>
+                                <segue destination="ySn-aP-WaP" kind="show" id="hTz-yf-qX5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="placesTableView" destination="vpT-hS-yMJ" id="yfw-cB-eRM"/>
                     </connections>
@@ -594,7 +594,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="h0I-sk-wB7"/>
                     </view>
-                    <navigationItem key="navigationItem" id="D3R-Bt-BEF"/>
+                    <navigationItem key="navigationItem" id="D3R-Bt-BEF">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="gear" catalog="system" id="2SP-Yg-9p3">
+                            <connections>
+                                <segue destination="ySn-aP-WaP" kind="show" id="Nnh-7E-8QS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cuisineAnalysisView" destination="Mie-5f-aCg" id="eeE-w1-uB2"/>
                         <outlet property="dietaryRestrictionTable" destination="BWf-SG-50O" id="2ob-vR-JQ3"/>
@@ -627,9 +633,11 @@
     <inferredMetricsTieBreakers>
         <segue reference="OpZ-Oc-1GV"/>
         <segue reference="eSi-7o-mIe"/>
+        <segue reference="hTz-yf-qX5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Logo" width="200" height="200"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
     </resources>
 </document>
