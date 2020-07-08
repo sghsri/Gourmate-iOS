@@ -18,6 +18,37 @@ class PlaceCell : UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
 }
 
+class GourmateButton : UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        let width = 300
+        let height = 50
+        self.frame.size = CGSize(width: width, height: height)
+        layer.shadowRadius = 5.0
+        
+        self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        self.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.setTitleColor(UIColor.white, for: .normal)
+        self.backgroundColor = UIColor.systemRed
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        self.setTitle(self.titleLabel?.text?.capitalized, for: .normal)
+    }
+    
+}
+
+
+
 class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var latitude = 0.0
