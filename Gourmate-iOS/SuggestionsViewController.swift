@@ -31,6 +31,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
 
     
     var selectedUsers:[MateObject] = []
+    var radius = 500.0
     var places:[[String : Any]] = []
     @IBOutlet weak var placesTableView: UITableView!
     override func viewDidLoad() {
@@ -175,7 +176,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
             indicator.backgroundColor = .white
             // Parameters for API call
             let parameters = [
-                "location": ["latitude": latitude, "longitude": longitude, "radius": 500],
+                "location": ["latitude": latitude, "longitude": longitude, "radius": self.radius],
                 "cuisines": self.aggregateCuisines(),
                 "restrictions": self.aggregateRestrictions()
                 ] as [String : Any]

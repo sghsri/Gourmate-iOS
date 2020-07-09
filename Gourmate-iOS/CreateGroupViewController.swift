@@ -23,6 +23,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var allMatesTable: UITableView!
     @IBOutlet weak var selectedMatesTable: UITableView!
     @IBOutlet weak var matesLabel: UILabel!
+    @IBOutlet weak var distanceField: UITextField!
     var mates:[MateObject] = []
     var filtered:[MateObject] = []
     var selected:[MateObject] = []
@@ -264,8 +265,27 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        return string == numberFiltered
+    }
     
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if self.distanceField.text != nil && Double(self.distanceField.text!) != nil  {
+             // your code here, like badParameters  = false, e.t.c
+             return true
+        } else {
+            let ac = UIAlertController(title: "Invalid Distance", message: "Please input a valid distance in meters.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true, completion: nil)
+
+        }
+        return false
+    }
     
     
     // Send selected users to other screens
@@ -274,6 +294,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "makeGroupIdentifier", let nextVC = segue.destination as?
             SuggestionsViewController {
             nextVC.selectedUsers = self.selected
+            nextVC.radius = Double((self.distanceField?.text)! as String)!
         }
         if segue.identifier == "groupAnalysisSegue", let nextVC = segue.destination as?
             GroupAnalysisViewController {
