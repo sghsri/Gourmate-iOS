@@ -93,7 +93,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
                                 let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                                 let newUser = NSManagedObject(entity: entity!, insertInto: context)
                                 newUser.setValue(GIDSignIn.sharedInstance()!.currentUser.profile.email, forKey: "email")
-                                newUser.setValue(curUserNotif, forKey: "notifications")
+                                newUser.setValue(false, forKey: "location")
                                 newUser.setValue(false, forKey: "darkMode")
                                 curUser = newUser // Save current user globally
                                 
