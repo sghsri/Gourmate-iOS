@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 struct BarEntry {
-   let score: Int
-   let title: String
+    let score: Int
+    let title: String
 }
 
 class BarChartView: UIView {
-  
+    
     private let mainLayer: CALayer = CALayer()
     private let scrollView: UIScrollView = UIScrollView()
     let space: CGFloat = 20.0
@@ -25,37 +25,37 @@ class BarChartView: UIView {
     var darkMode: Bool = false
     
     var dataEntries: [BarEntry] = [] {
-    didSet {
-       mainLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
-       scrollView.contentSize = CGSize(width: frame.size.width, height:
-       barHeight + space * CGFloat(dataEntries.count) + contentSpace)
-       mainLayer.frame = CGRect(x: 0, y: 0, width:
-       scrollView.contentSize.width, height:
-       scrollView.contentSize.height)
-       for i in 0..<dataEntries.count {
-          showEntry(index: i, entry: dataEntries[i])
-       }
-    }
+        didSet {
+            mainLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
+            scrollView.contentSize = CGSize(width: frame.size.width, height:
+                barHeight + space * CGFloat(dataEntries.count) + contentSpace)
+            mainLayer.frame = CGRect(x: 0, y: 0, width:
+                scrollView.contentSize.width, height:
+                scrollView.contentSize.height)
+            for i in 0..<dataEntries.count {
+                showEntry(index: i, entry: dataEntries[i])
+            }
+        }
     }
     override init(frame: CGRect) {
-       super.init(frame: frame)
-       setupView()
+        super.init(frame: frame)
+        setupView()
     }
     required init?(coder aDecoder: NSCoder) {
-       fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     private func setupView() {
-       scrollView.layer.addSublayer(mainLayer)
-       addSubview(scrollView)
+        scrollView.layer.addSublayer(mainLayer)
+        addSubview(scrollView)
     }
     override func layoutSubviews() {
-       scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width,
-       height: frame.size.height)
+        scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width,
+                                  height: frame.size.height)
     }
     
     private func showEntry(index: Int, entry: BarEntry) {
         let xPos: CGFloat = translateWidthValueToXPosition(value:
-        Float(entry.score) / Float(maxBarLength))
+            Float(entry.score) / Float(maxBarLength))
         let yPos: CGFloat = space + CGFloat(index) * (barHeight + space)
         drawBar(xPos: xPos , yPos: yPos, index: index)
         drawTextValue(xPos: 16.0 + 275, yPos: yPos + 2.0, textValue: "\(entry.score)")
@@ -66,37 +66,37 @@ class BarChartView: UIView {
         let barLayer = CALayer()
         barLayer.frame = CGRect(x: 80.0, y: yPos, width: xPos, height: 20.0)
         
-        barLayer.backgroundColor = Bool(index % 2 as NSNumber) ? UIColor.systemRed.cgColor : UIColor.systemYellow.cgColor
+        barLayer.backgroundColor = Bool(truncating: index % 2 as NSNumber) ? UIColor.systemRed.cgColor : UIColor.systemYellow.cgColor
         mainLayer.addSublayer(barLayer)
     }
     
     private func drawTextValue(xPos: CGFloat, yPos: CGFloat, textValue: String) {
-       let textLayer = CATextLayer()
-       textLayer.frame = CGRect(x: xPos, y: yPos, width: 33, height: 80.0)
-       textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
-       textLayer.backgroundColor = UIColor.clear.cgColor
-       textLayer.alignmentMode = CATextLayerAlignmentMode.center
-       textLayer.contentsScale = UIScreen.main.scale
-       textLayer.fontSize = 14
-       textLayer.string = textValue
-       mainLayer.addSublayer(textLayer)
+        let textLayer = CATextLayer()
+        textLayer.frame = CGRect(x: xPos, y: yPos, width: 33, height: 80.0)
+        textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
+        textLayer.backgroundColor = UIColor.clear.cgColor
+        textLayer.alignmentMode = CATextLayerAlignmentMode.center
+        textLayer.contentsScale = UIScreen.main.scale
+        textLayer.fontSize = 14
+        textLayer.string = textValue
+        mainLayer.addSublayer(textLayer)
     }
     
     private func drawTitle(xPos: CGFloat, yPos: CGFloat, width: CGFloat, height: CGFloat = 22, title: String) {
-       let textLayer = CATextLayer()
-       textLayer.frame = CGRect(x: xPos, y: yPos, width: width, height: height)
-       textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
-       textLayer.backgroundColor = UIColor.clear.cgColor
-       textLayer.alignmentMode = CATextLayerAlignmentMode.left
-       textLayer.contentsScale = UIScreen.main.scale
-       textLayer.fontSize = 14
-       textLayer.string = title
-       mainLayer.addSublayer(textLayer)
+        let textLayer = CATextLayer()
+        textLayer.frame = CGRect(x: xPos, y: yPos, width: width, height: height)
+        textLayer.foregroundColor = darkMode ? UIColor.white.cgColor : UIColor.black.cgColor
+        textLayer.backgroundColor = UIColor.clear.cgColor
+        textLayer.alignmentMode = CATextLayerAlignmentMode.left
+        textLayer.contentsScale = UIScreen.main.scale
+        textLayer.fontSize = 14
+        textLayer.string = title
+        mainLayer.addSublayer(textLayer)
     }
     
     private func translateWidthValueToXPosition(value: Float) -> CGFloat
     {
-       let width = CGFloat(value) * (mainLayer.frame.width - space)
-       return abs(width)
+        let width = CGFloat(value) * (mainLayer.frame.width - space)
+        return abs(width)
     }
 }
