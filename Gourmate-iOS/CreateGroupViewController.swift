@@ -54,7 +54,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 self.allMatesTable.reloadData()
                 self.selectedMatesTable.reloadData()
-
+                
             }
         })
         // Do any additional setup after loading the view.
@@ -78,12 +78,15 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func qrCodeButton(_ sender: Any) {
         captureSession = AVCaptureSession()
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+            failed()
+            return }
         let videoInput: AVCaptureDeviceInput
         
         do {
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
         } catch {
+            failed()
             return
         }
         
@@ -266,7 +269,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
+        
         let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
@@ -275,16 +278,19 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if self.distanceField.text != nil && Double(self.distanceField.text!) != nil  {
-             // your code here, like badParameters  = false, e.t.c
-             return true
-        } else {
-            let ac = UIAlertController(title: "Invalid Distance", message: "Please input a valid distance in meters.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true, completion: nil)
-
+        if identifier == "makeGroupIdentifier"{
+            if self.distanceField.text != nil && Double(self.distanceField.text!) != nil  {
+                // your code here, like badParameters  = false, e.t.c
+                return true
+            } else {
+                let ac = UIAlertController(title: "Invalid Distance", message: "Please input a valid distance in meters.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true, completion: nil)
+                
+            }
+            return false
         }
-        return false
+        return true
     }
     
     
