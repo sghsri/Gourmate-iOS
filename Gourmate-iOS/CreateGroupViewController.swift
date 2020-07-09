@@ -66,6 +66,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         })
     }
     
+    // turn the camera on and off respectively when view will appear and disappear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -76,7 +77,6 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         if (captureSession?.isRunning == true) {
             captureSession.stopRunning()
         }
@@ -84,6 +84,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     // QR Button to add users via QR Code
     @IBAction func qrCodeButton(_ sender: Any) {
+        // initialize the camera and video input objects
         captureSession = AVCaptureSession()
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
             failed()
@@ -103,7 +104,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
             failed()
             return
         }
-        
+        // make sure we're trying to find a qr code
         let metadataOutput = AVCaptureMetadataOutput()
         if (captureSession.canAddOutput(metadataOutput)) {
             captureSession.addOutput(metadataOutput)
@@ -119,21 +120,22 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
         
-        var backbutton = UIButton(type: .custom)
+        // create the backbutton on the navbar while in QR Code Camera mode
+        let backbutton = UIButton(type: .custom)
         backbutton.setTitle("Cancel", for: .normal)
         backbutton.setTitleColor(backbutton.tintColor, for: .normal) // You can change the TitleColor
         backbutton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backbutton)
         captureSession.startRunning()
     }
-    
+    // close the QRcode camera and return back to the Create Group Scene conceptually
     @objc func buttonAction() -> Void {
         previewLayer.removeFromSuperlayer()
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         captureSession.stopRunning()
-        
+        // if found a qr code, let's decode and vibrate the phone
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
@@ -146,8 +148,10 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     func found(code: String) {
         print(code)
+        // if we've found a valid QR code value, make sure there exists a mate with an email as that code
         if let mate = self.mates.first(where: {$0.email == code}){
             print(mate)
+            // if so, prompt the user whether they want to add them or not. If so, add them.
             let ac = UIAlertController(title: "Add Mate", message: "Found mate with email \(code)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
                 self.addMate(mate:mate)
@@ -157,6 +161,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
             }))
             present(ac, animated: true)
         } else {
+            // let the user know when not a valid user
             print("not valid")
             let ac = UIAlertController(title: "Not Valid Gourmate Code", message: "Found \(code)", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -167,11 +172,12 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+    // lock into portrait mode
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
     
+    // if the QR code scanning could not occur, show the user as such
     func failed() {
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -185,6 +191,8 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         return true
     }
     
+    // handle search bar cancelling / focus lost
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -205,6 +213,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         searchActive = false;
     }
     
+    // filter the results in the mateslist to the ones that start with the text in the search bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filtered = mates.filter({ (mate) -> Bool in
             let tmp: String = mate.name
@@ -218,6 +227,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         self.allMatesTable.reloadData()
     }
     
+    // show the count for either the filtered list or the selected list
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == allMatesTable {
             if(searchActive) {
@@ -241,8 +251,9 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             let user = selected[indexPath.row]
             if let index = selected.firstIndex(of: user) {
+                // ask if they want to remove the mate from the selected mates list
                 let refreshAlert = UIAlertController(title: "Remove Mate", message: "Are you sure you want to remove this mate from your group?", preferredStyle: UIAlertController.Style.alert)
-                
+                // if so, remove the mate if it is not the current user
                 refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
                     if user.email == curUserEmail{
                         let selfAlert = UIAlertController(title: "Uh Oh!", message: "You can't remove yourself from the Group!", preferredStyle: UIAlertController.Style.alert)
@@ -264,6 +275,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     
+    // add a mate to the selected list if isn't already selected
     func addMate(mate:MateObject){
         if !selected.contains(mate) {
             self.selected.append(mate)
@@ -275,25 +287,25 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    
+    // valid characters in the textField
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         return string == numberFiltered
     }
     
-    
+    // decide if should take segue or not
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "makeGroupIdentifier"{
+            // if the distance field is not empty / a number, then go through the segue, otherwise fail and show alert
             if self.distanceField.text != nil && Double(self.distanceField.text!) != nil  {
-                // your code here, like badParameters  = false, e.t.c
                 return true
             } else {
                 let ac = UIAlertController(title: "Invalid Distance", message: "Please input a valid distance in meters.", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "OK", style: .default))
                 present(ac, animated: true, completion: nil)
-                
             }
             return false
         }
@@ -303,7 +315,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     // Send selected users to other screens
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        // prepare the segues with the selected users and API parameters selected
         if segue.identifier == "makeGroupIdentifier", let nextVC = segue.destination as?
             SuggestionsViewController {
             nextVC.selectedUsers = self.selected
@@ -318,10 +330,13 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     // Data in the row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mateCell", for: indexPath) as! MateCell
+        // if the search is active and we're trying to show all the users, let's show the filtered list instead of the main list, otherwise just show the selected users list
         let source = tableView == allMatesTable ? self.searchActive ? self.filtered : self.mates : selected;
+        // use the mate at the specific list view we care about
         let mate = source == selected ? source[indexPath.row] : source[indexPath.row]
         cell.mateName.text = mate.name
         let imageURL = URL(string: mate.image)
+        // asyncronously load the UIImage into memory
         DispatchQueue.global().async {
             let data = try? Data(contentsOf: imageURL!)
             DispatchQueue.main.async {

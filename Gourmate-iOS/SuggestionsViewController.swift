@@ -75,7 +75,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         
     }
     
-    // Loading suggestions
+    // loading animation for the suggestions
     func activityIndicator() {
         indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         indicator.style = UIActivityIndicatorView.Style.gray
@@ -102,7 +102,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         
         cell.contentView.setCardView()
         
-        cell.indexLabel.text = "\(index)"
+        // style the place label
         cell.placeNameLabel.text = place["name"] as? String
         cell.placeNameLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
         cell.cuisineLabel.text = place["cuisine"] as? String
@@ -110,6 +110,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         
         cell.addressLabel.text = place["vicinity"] as? String
         
+        // let's style the colors and the content of the image and ratings to be just like how we want them
         cell.ratingLabel.text = "\(place["rating"] as! Double) ⭑ (\(place["user_ratings_total"] as! Int) ratings)"
         cell.placeImageView.layer.borderWidth = 1
         cell.placeImageView.layer.masksToBounds = false
@@ -117,6 +118,10 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         cell.placeImageView.layer.cornerRadius = cell.placeImageView.frame.height/2
         cell.placeImageView.clipsToBounds = true
         cell.placeImageView.contentMode = .scaleToFill
+        
+        
+        // show the index for every cell in a circle
+        cell.indexLabel.text = "\(index)"
         
         let size:CGFloat = 20.0
         cell.indexLabel.textColor = UIColor.white
@@ -139,8 +144,10 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         var place = source[indexPath.row]
         self.styleTableViewCell(cell: cell, place: place, index:indexPath.row+1)
         if place["imgObject"] != nil {
+            // if we've already loaded (chached) the UImage in the place object dictionary, then let's just use that
             cell.placeImageView.image = place["imgObject"] as? UIImage
         } else {
+            // otherwise, let's fetch it and cache it now!
             if place["STORE_IMG"] != nil {
                 let imageURL = URL(string: place["STORE_IMG"] as! String)
                 DispatchQueue.global().async {
@@ -198,15 +205,15 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
             ] as [String : Any]
         
         
-        // Make API call
+        // Make API call with our location and cuisine information parameters
         AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            
             switch response.result {
             case let .success(value):
-                print(value)
-                if var array = value as? [[String : Any]] {
+                // let as cast our JSON response as a dictionary of String keys to Any values
+                if let array = value as? [[String : Any]] {
                     self.places = array
                     for var place in self.places {
+                        // if the API provided a store image, let's load the URL and cache it
                         if place["STORE_IMG"] != nil {
                             let imageURL = URL(string: place["STORE_IMG"] as! String)
                             DispatchQueue.global().async {
@@ -217,6 +224,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
                             }
                         }
                     }
+                    // stop the animation and reload the data with the new places
                     self.indicator.stopAnimating()
                     self.indicator.hidesWhenStopped = true
                     self.placesTableView.reloadData()
@@ -254,6 +262,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         }
     }
 }
+
+// make a cardview view have dropshaddow and a lighter border
 extension UIView {
     
     func setCardView(){
