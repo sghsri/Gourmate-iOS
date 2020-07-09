@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var settingsTable: UITableView!
     
-    var settings = ["Notifications", "Dark Mode"]
+    var settings = ["Dark Mode"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,9 +67,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if settings[indexPath.row] == "Dark Mode" {
             cell.settingsSwitch.isOn = curUser.value(forKey: "darkMode") as! Bool
         }
-        else if settings[indexPath.row] == "Notifications" {
-            cell.settingsSwitch.isOn = curUser.value(forKey: "notifications") as! Bool
-        }
         
         return cell
     }
@@ -85,27 +82,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func changeSwitch(_ sender: Any) {
         let selectedSwitch = sender as! UISwitch
         
-        // Notifications swtich
-        if selectedSwitch.restorationIdentifier == "Notifications Identifier" {
-            if selectedSwitch.isOn {
-                print("Turned notifications on")
-                UNUserNotificationCenter.current().requestAuthorization(options: .alert, completionHandler: {
-                    (success, error) in
-                    if success {
-                        curUser.setValue(true, forKey: "notifications")
-                    } else {
-                        UIApplication.shared.unregisterForRemoteNotifications()
-                        selectedSwitch.isOn = false
-                    }
-                })
-            } else {
-                print("Turned notifications off")
-                UIApplication.shared.unregisterForRemoteNotifications()
-                curUser.setValue(false, forKey: "notifications")
-            }
-        
-        // Dark mode switch
-        } else if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
+       if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
             if selectedSwitch.isOn {
                 print("Turned dark mode on")
                 curUser.setValue(true, forKey: "darkMode")
