@@ -18,17 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate  {
         // Initialize sign-in
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-
-      return true
+        return true
     }
     
     @available(iOS 9.0, *)
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         let handled = GIDSignIn.sharedInstance().handle(url)
         return handled
-        // return GIDSignIn.sharedInstance().handle(url,
-        // sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-        // annotation: [:])
     }
 
     // MARK: UISceneSession Lifecycle

@@ -35,17 +35,25 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set up tables
         allMatesTable.delegate = self
         allMatesTable.dataSource = self
         selectedMatesTable.delegate = self
         selectedMatesTable.dataSource = self
         searchBar.delegate = self
+        
+        // Firebase reference
         ref = Database.database().reference()
+        
+        // Get all users in Firebase to add to list
         self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
             if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
                 for child in snapshots {
                     if let mate = child.value as? NSDictionary {
                         self.mates.append(MateObject(mateObj: mate))
+                        
+                        // Add current user automatically to Selected list
                         if curUserEmail == mate["email"] as? String {
                             self.selected.append(MateObject(mateObj: mate))
                         }
@@ -54,10 +62,8 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 self.allMatesTable.reloadData()
                 self.selectedMatesTable.reloadData()
-                
             }
         })
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +82,7 @@ class CreateGroupViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    // QR Button to add users via QR Code
     @IBAction func qrCodeButton(_ sender: Any) {
         captureSession = AVCaptureSession()
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {

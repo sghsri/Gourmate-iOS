@@ -2,7 +2,7 @@
 //  GroupAnalysisViewController.swift
 //  Gourmate-iOS
 //
-//  Created by Matthew Onghai on 7/5/20.
+//  Created by Jennifer Suriadinata on 7/5/20.
 //  Copyright © 2020 utexas. All rights reserved.
 //
 

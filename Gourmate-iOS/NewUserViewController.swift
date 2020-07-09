@@ -45,9 +45,10 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Set delegate and data source for tables
         cuisineTable.delegate = self
         cuisineTable.dataSource = self
-        
         DRTable.delegate = self
         DRTable.dataSource = self
+        
+        // Set up Firebase
         ref = Database.database().reference()
         user = GIDSignIn.sharedInstance()!.currentUser
         
@@ -88,8 +89,9 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             // Set identifier for checkbox
             cell.checkbox.isChecked = find(value: cuisineText, in: userCuisines) // mark unchecked if not in list
             cell.checkbox.restorationIdentifier = "\(cuisines[indexPath.row])"
-            
             return cell
+            
+        // Dietary Restriction Table
         } else if tableView == DRTable {
             let cell = DRTable.dequeueReusableCell(withIdentifier: "DRTableCell", for: indexPath) as! DietaryRestrictionCell
             
@@ -100,7 +102,6 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             // Set identifier for checkbox
             cell.checkbox.isChecked = find(value: DRText, in: userDietaryRestrictions) // mark unchecked if not in list
             cell.checkbox.restorationIdentifier = "\(dietaryRestrictions[indexPath.row])"
-            
             return cell
         }
         print ("No table association")
@@ -125,7 +126,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             array.removeAll{$0 == checkbox.restorationIdentifier}
             
-            // Has just been checked
+        // Has just been checked
         } else {
             array.append(checkbox.restorationIdentifier!)
         }
@@ -141,7 +142,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         checkboxAddToArray(array: &userDietaryRestrictions, checkbox: sender as! CheckBox)
     }
     
-    
+    // Create user in Firebase
     func createUser() {
         var userDP = URL(string: "")
         if (user?.profile.hasImage)! {
@@ -171,7 +172,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         request.returnsObjectsAsFaults = false
         
-        // Store email in Core Data
+        // Set up user in Core Data
         let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
         let curEmail = GIDSignIn.sharedInstance()!.currentUser.profile.email

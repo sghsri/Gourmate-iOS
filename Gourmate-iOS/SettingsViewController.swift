@@ -2,7 +2,7 @@
 //  SettingsViewController.swift
 //  Gourmate-iOS
 //
-//  Created by Matthew Onghai on 6/18/20.
+//  Created by Jennifer Suriadinata on 6/18/20.
 //  Copyright © 2020 utexas. All rights reserved.
 //
 
@@ -19,7 +19,6 @@ class SettingsTableCell: UITableViewCell {
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var qrCodeimage: UIImageView!
-    
     @IBOutlet weak var settingsTable: UITableView!
     
     var settings = ["Dark Mode", "Location"]
@@ -27,11 +26,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set up Settings table
         settingsTable.delegate = self
         settingsTable.dataSource = self
+        
+        // Get QR Code
         self.qrCodeimage.image = generateQRCode(from: (GIDSignIn.sharedInstance()?.currentUser.profile.email)!)
     }
     
+    // Generate QR Code based on unique email
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
 
@@ -72,22 +75,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
-//    @IBAction func logOutButton(_ sender: Any) {
-//        GIDSignIn.sharedInstance().signOut()
-//
-//        self.present(SignInViewController(), animated: true, completion: nil)
-//    }
-
-    
     // Change Core Data for setting that switch is associated with
     @IBAction func changeSwitch(_ sender: Any) {
         let selectedSwitch = sender as! UISwitch
         
-       if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
+        // Dark Mode switch
+        if selectedSwitch.restorationIdentifier == "Dark Mode Identifier" {
             if selectedSwitch.isOn {
                 print("Turned dark mode on")
                 curUser.setValue(true, forKey: "darkMode")
 
+                // Change all screens to dark mode
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .dark
                 }
@@ -96,18 +94,25 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("Turned dark mode off")
                 curUser.setValue(false, forKey: "darkMode")
 
+                // CHange all screens to light mode
                 UIApplication.shared.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .light
                 }
 
             }
+        
+        // Location setting
         } else if selectedSwitch.restorationIdentifier == "Location Identifier" {
             if selectedSwitch.isOn {
                 print("Turned location on")
+                
+                // Set core data bool for location
                 curUser.setValue(true, forKey: "location")
 
             } else {
                 print("Turned location off")
+                
+                // Set core data bool for location
                 curUser.setValue(false, forKey: "location")
             }
         }

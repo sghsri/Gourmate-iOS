@@ -2,7 +2,7 @@
 //  SuggestionsViewController.swift
 //  Gourmate-iOS
 //
-//  Created by Matthew Onghai on 7/5/20.
+//  Created by Jennifer Suriadinata on 7/5/20.
 //  Copyright © 2020 utexas. All rights reserved.
 //
 
@@ -21,13 +21,16 @@ class PlaceCell : UITableViewCell {
 
 class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    // Latitude and longitude of user
     var latitude = 0.0
     var longitude = 0.0
 
+    // Core Location
     var locationManager:CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
     var indicator = UIActivityIndicatorView()
     
+    // Data from previous screen
     var selectedUsers:[MateObject] = []
     var radius = 500.0
     var places:[[String : Any]] = []
@@ -36,6 +39,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     @IBOutlet weak var placesTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set up suggestion table
         placesTableView.delegate = self
         placesTableView.dataSource = self
         placesTableView.rowHeight = 130;
@@ -55,58 +60,22 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         // Location off
         } else {
             locationManager.stopUpdatingLocation()
-            startLocation = CLLocation(latitude: 30.28, longitude: 97.73) // Default location is UT Austin
+            
+            // Default location is San Francisco, make API request immediately
+            // This place was chosen because there are many places open nearby
+            startLocation = CLLocation(latitude: 37.78, longitude: -122.40)
             latitude = startLocation.coordinate.latitude
             longitude = startLocation.coordinate.longitude
             print("Latitude: \(latitude), Longitude: \(longitude)")
             
-            // Set up page
-            activityIndicator()
-            indicator.startAnimating()
-            indicator.backgroundColor = .white
-            // Parameters for API call
-            let parameters = [
-                "location": ["latitude": latitude, "longitude": longitude, "radius": self.radius],
-                "cuisines": self.aggregateCuisines(),
-                "restrictions": self.aggregateRestrictions()
-                ] as [String : Any]
-            
-            
-            // Make API call
-            AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                
-                // Got response for list of restaurants
-                switch response.result {
-                case let .success(value):
-                    print(value)
-                    if var array = value as? [[String : Any]] {
-                        self.places = array
-                        for var place in self.places {
-                            if place["STORE_IMG"] != nil {
-                                let imageURL = URL(string: place["STORE_IMG"] as! String)
-                                DispatchQueue.global().async {
-                                    let data = try? Data(contentsOf: imageURL!)
-                                    DispatchQueue.main.async {
-                                        place["imgObject"] = UIImage(data: data!)
-                                    }
-                                }
-                            }
-                        }
-                        self.indicator.stopAnimating()
-                        self.indicator.hidesWhenStopped = true
-                        self.placesTableView.reloadData()
-                    }
-                    
-                case let .failure(error):
-                    print(error)
-                }
-            }
+            getSuggestions()
         }
-        startLocation = CLLocation(latitude: 27.2, longitude: 77.5)
+        startLocation = CLLocation(latitude: 37.78, longitude: -122.40)
         update = true
         
     }
     
+    // Loading suggestions
     func activityIndicator() {
         indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         indicator.style = UIActivityIndicatorView.Style.gray
@@ -114,11 +83,12 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         self.view.addSubview(indicator)
     }
     
-    
+    // Number of rows for suggestions table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.places.count
     }
     
+    // Selecting row will redirect to Google Maps location
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = self.places[indexPath.row]
         let location = (place["geometry"] as! NSDictionary)["location"] as! NSDictionary
@@ -127,7 +97,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         UIApplication.shared.openURL(NSURL(string: url)! as URL)
     }
     
-    
+    // Styling for table
     func styleTableViewCell(cell:PlaceCell, place:[String:Any?], index:Int){
         
         cell.contentView.setCardView()
@@ -162,6 +132,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         cell.indexLabel.layer.cornerRadius = 0.5 * cell.indexLabel.bounds.size.width
     }
     
+    // Data for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath) as! PlaceCell
         let source = self.places
@@ -184,7 +155,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         return cell
     }
     
-    
+    // Get all cuisines
     func aggregateCuisines() -> Array<String>{
         var cuisines:Set = Set<String>()
         for user in selectedUsers {
@@ -195,6 +166,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         return Array(cuisines)
     }
     
+    // Get all restrictions
     func aggregateRestrictions() -> Array<String>{
         var restricts:Set = Set<String>()
         for user in selectedUsers {
@@ -213,6 +185,49 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         // Dispose of any resources that can be created
     }
     
+    // Get suggestions with API request
+    func getSuggestions(){
+        activityIndicator()
+        indicator.startAnimating()
+        indicator.backgroundColor = .white
+        // Parameters for API call
+        let parameters = [
+            "location": ["latitude": latitude, "longitude": longitude, "radius": self.radius],
+            "cuisines": self.aggregateCuisines(),
+            "restrictions": self.aggregateRestrictions()
+            ] as [String : Any]
+        
+        
+        // Make API call
+        AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            
+            switch response.result {
+            case let .success(value):
+                print(value)
+                if var array = value as? [[String : Any]] {
+                    self.places = array
+                    for var place in self.places {
+                        if place["STORE_IMG"] != nil {
+                            let imageURL = URL(string: place["STORE_IMG"] as! String)
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: imageURL!)
+                                DispatchQueue.main.async {
+                                    place["imgObject"] = UIImage(data: data!)
+                                }
+                            }
+                        }
+                    }
+                    self.indicator.stopAnimating()
+                    self.indicator.hidesWhenStopped = true
+                    self.placesTableView.reloadData()
+                }
+                
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+    
     // Change in location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -226,45 +241,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         // Make API request on lodaing view
         if update {
             update = false
-            activityIndicator()
-            indicator.startAnimating()
-            indicator.backgroundColor = .white
-            // Parameters for API call
-            let parameters = [
-                "location": ["latitude": latitude, "longitude": longitude, "radius": self.radius],
-                "cuisines": self.aggregateCuisines(),
-                "restrictions": self.aggregateRestrictions()
-                ] as [String : Any]
-            
-            
-            // Make API call
-            AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                
-                switch response.result {
-                case let .success(value):
-                    print(value)
-                    if var array = value as? [[String : Any]] {
-                        self.places = array
-                        for var place in self.places {
-                            if place["STORE_IMG"] != nil {
-                                let imageURL = URL(string: place["STORE_IMG"] as! String)
-                                DispatchQueue.global().async {
-                                    let data = try? Data(contentsOf: imageURL!)
-                                    DispatchQueue.main.async {
-                                        place["imgObject"] = UIImage(data: data!)
-                                    }
-                                }
-                            }
-                        }
-                        self.indicator.stopAnimating()
-                        self.indicator.hidesWhenStopped = true
-                        self.placesTableView.reloadData()
-                    }
-                    
-                case let .failure(error):
-                    print(error)
-                }
-            }
+            getSuggestions()
         }
         startLocation = latestLocation
     }

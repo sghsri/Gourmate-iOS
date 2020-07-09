@@ -2,7 +2,7 @@
 //  Checkbox.swift
 //  Gourmate-iOS
 //
-//  Created by Matthew Onghai on 6/29/20.
+//  Created by Jennifer Suriadinata on 6/29/20.
 //  Copyright © 2020 utexas. All rights reserved.
 //
 
