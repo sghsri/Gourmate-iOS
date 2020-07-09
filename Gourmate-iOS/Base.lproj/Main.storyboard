@@ -320,10 +320,13 @@
                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-mx-RSF" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
-                                <rect key="frame" x="141" y="818" width="133" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="See Group Analysis"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-mx-RSF" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
+                                <rect key="frame" x="107" y="798" width="200" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="gn9-yi-jJV"/>
+                                    <constraint firstAttribute="height" constant="50" id="nxL-6i-Dor"/>
+                                </constraints>
+                                <state key="normal" title="Group Analysis"/>
                                 <connections>
                                     <segue destination="ylQ-zv-k07" kind="show" identifier="groupAnalysisSegue" id="eSi-7o-mIe"/>
                                 </connections>
@@ -337,6 +340,10 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jkM-mx-RSF" firstAttribute="centerX" secondItem="zOC-lA-LMm" secondAttribute="centerX" id="dep-4X-WgG"/>
+                            <constraint firstItem="zOC-lA-LMm" firstAttribute="bottom" secondItem="jkM-mx-RSF" secondAttribute="bottom" constant="14" id="sgM-6w-Hpt"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zOC-lA-LMm"/>
                     </view>
                     <navigationItem key="navigationItem" id="xur-oj-7ad">
@@ -687,8 +694,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2KO-NF-EdM"/>
-        <segue reference="eSi-7o-mIe"/>
-        <segue reference="hTz-yf-qX5"/>
+        <segue reference="5W0-GE-40l"/>
+        <segue reference="BEf-pa-Keu"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Logo" width="200" height="200"/>
