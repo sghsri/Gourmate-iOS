@@ -15,6 +15,7 @@
 		1F9153C424956FB600C45437 /* Gourmate_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F9153C224956FB600C45437 /* Gourmate_iOS.xcdatamodeld */; };
 		1F9153C624956FB700C45437 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F9153C524956FB700C45437 /* Assets.xcassets */; };
 		1F9153C924956FB700C45437 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F9153C724956FB700C45437 /* LaunchScreen.storyboard */; };
+		1FA7446524B6917B002CDEEF /* GourmateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7446424B6917B002CDEEF /* GourmateButton.swift */; };
 		1FB5A3E824B27FA300DFD3CE /* MateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB5A3E724B27FA300DFD3CE /* MateObject.swift */; };
 		34229365249BC5B00054368B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34229364249BC5B00054368B /* SettingsViewController.swift */; };
 		342293BF24A566B50054368B /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342293BE24A566B50054368B /* NewUserViewController.swift */; };
@@ -39,6 +40,7 @@
 		1F9153C524956FB700C45437 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F9153C824956FB700C45437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F9153CA24956FB800C45437 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FA7446424B6917B002CDEEF /* GourmateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GourmateButton.swift; sourceTree = "<group>"; };
 		1FB5A3E724B27FA300DFD3CE /* MateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MateObject.swift; sourceTree = "<group>"; };
 		34229364249BC5B00054368B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		342293BE24A566B50054368B /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				342293C024A5686C0054368B /* UILabelPadding.swift */,
 				34F909C824AA4B730025FC6D /* Checkbox.swift */,
 				1FB5A3E724B27FA300DFD3CE /* MateObject.swift */,
+				1FA7446424B6917B002CDEEF /* GourmateButton.swift */,
 			);
 			path = "Gourmate-iOS";
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				1F9153BA24956FB600C45437 /* AppDelegate.swift in Sources */,
 				1F9153BC24956FB600C45437 /* SceneDelegate.swift in Sources */,
 				1FB5A3E824B27FA300DFD3CE /* MateObject.swift in Sources */,
+				1FA7446524B6917B002CDEEF /* GourmateButton.swift in Sources */,
 				1F824B9E24B25B5C0046610F /* CreateGroupViewController.swift in Sources */,
 				34229365249BC5B00054368B /* SettingsViewController.swift in Sources */,
 				342293BF24A566B50054368B /* NewUserViewController.swift in Sources */,

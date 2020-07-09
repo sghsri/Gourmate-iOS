@@ -73,7 +73,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dgb-17-lN3">
-                                <rect key="frame" x="20" y="196" width="374" height="44"/>
+                                <rect key="frame" x="20" y="188" width="337" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -123,9 +123,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t28-0A-4iJ" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
-                                <rect key="frame" x="20" y="756" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t28-0A-4iJ" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
+                                <rect key="frame" x="57" y="736" width="300" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="3er-fq-4PB"/>
+                                    <constraint firstAttribute="height" constant="50" id="GAd-80-LWk"/>
+                                </constraints>
                                 <state key="normal" title="Group Analysis"/>
                                 <connections>
                                     <segue destination="ylQ-zv-k07" kind="show" identifier="groupAnalysisSegue" id="5W0-GE-40l"/>
@@ -177,16 +180,33 @@
                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gs-Ce-TVA" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
-                                <rect key="frame" x="20" y="822" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gs-Ce-TVA" customClass="GourmateButton" customModule="Gourmate_iOS" customModuleProvider="target">
+                                <rect key="frame" x="57" y="802" width="300" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Di5-xT-TdJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="lEH-9T-9F5"/>
+                                </constraints>
                                 <state key="normal" title="Make Group"/>
                                 <connections>
                                     <segue destination="fax-Ld-5aE" kind="show" identifier="makeGroupIdentifier" id="IID-rO-sdf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5i-pb-yId">
+                                <rect key="frame" x="358" y="192" width="36" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="QR" image="qr-code"/>
+                                <connections>
+                                    <action selector="qrCodeButton:" destination="gol-1g-nbF" eventType="touchUpInside" id="lZ2-7L-SAA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="fUJ-b6-e5T" firstAttribute="bottom" secondItem="2Gs-Ce-TVA" secondAttribute="bottom" constant="10" id="ICl-go-4A2"/>
+                            <constraint firstItem="2Gs-Ce-TVA" firstAttribute="centerX" secondItem="fUJ-b6-e5T" secondAttribute="centerX" id="P4c-Db-GRy"/>
+                            <constraint firstItem="2Gs-Ce-TVA" firstAttribute="top" secondItem="t28-0A-4iJ" secondAttribute="bottom" constant="16" id="a1E-pg-h9o"/>
+                            <constraint firstItem="t28-0A-4iJ" firstAttribute="centerX" secondItem="fUJ-b6-e5T" secondAttribute="centerX" id="w97-Ms-YSh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fUJ-b6-e5T"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create Group" id="3hJ-rH-3C5">
@@ -215,14 +235,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-mx-RSF">
-                                <rect key="frame" x="141" y="832" width="133" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="See Group Analysis"/>
-                                <connections>
-                                    <segue destination="ylQ-zv-k07" kind="show" identifier="groupAnalysisSegue" id="eSi-7o-mIe"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vpT-hS-yMJ">
                                 <rect key="frame" x="20" y="209" width="374" height="567"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -301,10 +313,13 @@
                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dgr-DV-jq1">
-                                <rect key="frame" x="163" y="784" width="88" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkM-mx-RSF">
+                                <rect key="frame" x="141" y="818" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Notify Mates"/>
+                                <state key="normal" title="See Group Analysis"/>
+                                <connections>
+                                    <segue destination="ylQ-zv-k07" kind="show" identifier="groupAnalysisSegue" id="eSi-7o-mIe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -658,12 +673,13 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2KO-NF-EdM"/>
-        <segue reference="eSi-7o-mIe"/>
-        <segue reference="hTz-yf-qX5"/>
+        <segue reference="5W0-GE-40l"/>
+        <segue reference="BEf-pa-Keu"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Logo" width="200" height="200"/>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="qr-code" width="256" height="256"/>
     </resources>
 </document>

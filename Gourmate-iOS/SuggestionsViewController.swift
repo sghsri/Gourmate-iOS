@@ -19,37 +19,6 @@ class PlaceCell : UITableViewCell {
     @IBOutlet weak var ratingLabel: UILabel!
 }
 
-class GourmateButton : UIButton {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    private func setup() {
-        let width = 300
-        let height = 50
-        self.frame.size = CGSize(width: width, height: height)
-        layer.shadowRadius = 5.0
-        
-        self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        self.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.setTitleColor(UIColor.white, for: .normal)
-        self.backgroundColor = UIColor.systemRed
-        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
-        self.setTitle(self.titleLabel?.text?.capitalized, for: .normal)
-    }
-    
-}
-
-
-
 class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var latitude = 0.0
@@ -58,6 +27,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
     var indicator = UIActivityIndicatorView()
+    
+
     
     var selectedUsers:[MateObject] = []
     var places:[[String : Any]] = []
@@ -87,6 +58,7 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         indicator.center = self.view.center
         self.view.addSubview(indicator)
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.places.count
@@ -143,12 +115,14 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         if place["imgObject"] != nil {
             cell.placeImageView.image = place["imgObject"] as? UIImage
         } else {
-            let imageURL = URL(string: place["STORE_IMG"] as! String)
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: imageURL!)
-                place["imgObject"] = UIImage(data: data!)
-                DispatchQueue.main.async {
-                    cell.placeImageView.image = UIImage(data: data!)
+            if place["STORE_IMG"] != nil {
+                let imageURL = URL(string: place["STORE_IMG"] as! String)
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: imageURL!)
+                    place["imgObject"] = UIImage(data: data!)
+                    DispatchQueue.main.async {
+                        cell.placeImageView.image = UIImage(data: data!)
+                    }
                 }
             }
         }
@@ -250,12 +224,10 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
 extension UIView {
     
     func setCardView(){
-        layer.cornerRadius = 5.0
         layer.borderColor  =  UIColor.clear.cgColor
         layer.borderWidth = 5.0
         layer.shadowOpacity = 0.5
         layer.shadowColor =  UIColor.lightGray.cgColor
-        layer.shadowRadius = 5.0
         layer.shadowOffset = CGSize(width:5, height: 5)
         layer.masksToBounds = true
     }

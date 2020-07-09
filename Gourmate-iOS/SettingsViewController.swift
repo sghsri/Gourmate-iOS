@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         settingsTable.delegate = self
         settingsTable.dataSource = self
-        self.qrCodeimage.image = generateQRCode(from: "https://www.google.com")
+        self.qrCodeimage.image = generateQRCode(from: (GIDSignIn.sharedInstance()?.currentUser.profile.email)!)
     }
     
     func generateQRCode(from string: String) -> UIImage? {
