@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import GoogleSignIn
-import UserNotifications
 
 // Settings Table custom cell
 class SettingsTableCell: UITableViewCell {
@@ -23,7 +22,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var settingsTable: UITableView!
     
-    var settings = ["Dark Mode"]
+    var settings = ["Dark Mode", "Location"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +56,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingsTable.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableCell
         
-        // Label as "Notifications" or "Dark mode"
+        // Label as "Location" or "Dark mode"
         cell.settingText.text = settings[indexPath.row]
         
         // Put identifier on switch
@@ -66,6 +65,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         // Set switch on/off
         if settings[indexPath.row] == "Dark Mode" {
             cell.settingsSwitch.isOn = curUser.value(forKey: "darkMode") as! Bool
+        } else if settings[indexPath.row] == "Location" {
+            cell.settingsSwitch.isOn = curUser.value(forKey: "location") as! Bool
         }
         
         return cell
@@ -99,6 +100,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                     window.overrideUserInterfaceStyle = .light
                 }
 
+            }
+        } else if selectedSwitch.restorationIdentifier == "Location Identifier" {
+            if selectedSwitch.isOn {
+                print("Turned location on")
+                curUser.setValue(true, forKey: "location")
+
+            } else {
+                print("Turned location off")
+                curUser.setValue(false, forKey: "location")
             }
         }
         

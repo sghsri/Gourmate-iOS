@@ -176,7 +176,7 @@ class NewUserViewController: UIViewController, UITableViewDelegate, UITableViewD
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
         let curEmail = GIDSignIn.sharedInstance()!.currentUser.profile.email
         newUser.setValue(curEmail, forKey: "email")
-        newUser.setValue(curUserNotif, forKey: "notifications")
+        newUser.setValue(false, forKey: "location")
         newUser.setValue(true, forKey: "darkMode")
         
         do {

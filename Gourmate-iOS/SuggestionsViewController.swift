@@ -23,16 +23,16 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
     
     var latitude = 0.0
     var longitude = 0.0
-    
-    var locationManager: CLLocationManager = CLLocationManager()
+
+    var locationManager:CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
     var indicator = UIActivityIndicatorView()
-    
-
     
     var selectedUsers:[MateObject] = []
     var radius = 500.0
     var places:[[String : Any]] = []
+    var update = false
+    
     @IBOutlet weak var placesTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +47,63 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         // Set up location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        startLocation = nil
+        
+        // Location on
+        if curUser.value(forKey:"location") as! Bool {
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        // Location off
+        } else {
+            locationManager.stopUpdatingLocation()
+            startLocation = CLLocation(latitude: 30.28, longitude: 97.73) // Default location is UT Austin
+            latitude = startLocation.coordinate.latitude
+            longitude = startLocation.coordinate.longitude
+            print("Latitude: \(latitude), Longitude: \(longitude)")
+            
+            // Set up page
+            activityIndicator()
+            indicator.startAnimating()
+            indicator.backgroundColor = .white
+            // Parameters for API call
+            let parameters = [
+                "location": ["latitude": latitude, "longitude": longitude, "radius": self.radius],
+                "cuisines": self.aggregateCuisines(),
+                "restrictions": self.aggregateRestrictions()
+                ] as [String : Any]
+            
+            
+            // Make API call
+            AF.request("https://bagged-hockey-17985.herokuapp.com/api/search", method:.post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                
+                // Got response for list of restaurants
+                switch response.result {
+                case let .success(value):
+                    print(value)
+                    if var array = value as? [[String : Any]] {
+                        self.places = array
+                        for var place in self.places {
+                            if place["STORE_IMG"] != nil {
+                                let imageURL = URL(string: place["STORE_IMG"] as! String)
+                                DispatchQueue.global().async {
+                                    let data = try? Data(contentsOf: imageURL!)
+                                    DispatchQueue.main.async {
+                                        place["imgObject"] = UIImage(data: data!)
+                                    }
+                                }
+                            }
+                        }
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
+                        self.placesTableView.reloadData()
+                    }
+                    
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        }
+        startLocation = CLLocation(latitude: 27.2, longitude: 77.5)
+        update = true
         
     }
     
@@ -170,7 +224,8 @@ class SuggestionsViewController: UIViewController, CLLocationManagerDelegate, UI
         print("Latitude: \(latitude), Longitude: \(longitude)")
         
         // Make API request on lodaing view
-        if startLocation == nil {
+        if update {
+            update = false
             activityIndicator()
             indicator.startAnimating()
             indicator.backgroundColor = .white
